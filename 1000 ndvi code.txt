@@ -1,6 +1,8 @@
-// -----------------------------
+// =======================
+// Sentinel-2 Full Dataset Export Script (Fixed - No QA60)
+// =======================
+
 // Define Area of Interest (AOI)
-// -----------------------------
 var region = ee.Geometry.Polygon([
   [[80.66115534588437,7.87079163026181],
    [80.66051161572081,7.872279514551037],
@@ -51,53 +53,63 @@ var region = ee.Geometry.Polygon([
    [80.66115534588437,7.87079163026181]]
 ]);
 
-// -----------------------------
-// Load Sentinel-2 SR collection
-// -----------------------------
+// =======================
+// Load Sentinel-2 SR Collection
+// =======================
 var s2 = ee.ImageCollection('COPERNICUS/S2_SR')
   .filterBounds(region)
   .filterDate('2018-01-01', '2025-12-31')
   .filter(ee.Filter.lt('CLOUDY_PIXEL_PERCENTAGE', 30))
-  .map(function(image){
-    
-    // Add NDVI
+  .select([
+    'B1','B2','B3','B4','B5','B6','B7','B8','B8A',
+    'B9','B11','B12','AOT','WVP','SCL',
+    'MSK_CLDPRB','MSK_SNWPRB'
+  ])
+  .map(function(image) {
+    // Compute NDVI
     var ndvi = image.normalizedDifference(['B8', 'B4']).rename('NDVI');
+    // Compute NDWI
+    var ndwi = image.normalizedDifference(['B3', 'B8']).rename('NDWI');
+    // Compute NBR
+    var nbr = image.normalizedDifference(['B8', 'B12']).rename('NBR');
+    // Compute EVI
+    var evi = image.expression(
+      '2.5 * ((NIR - RED) / (NIR + 6 * RED - 7.5 * BLUE + 1))', {
+        'NIR': image.select('B8'),
+        'RED': image.select('B4'),
+        'BLUE': image.select('B2')
+      }).rename('EVI');
     
-    // Add some more indices if needed
-    var ndwi = image.normalizedDifference(['B3','B8']).rename('NDWI'); // Water index
-    var nbr = image.normalizedDifference(['B8','B12']).rename('NBR'); // Burn ratio
+    // Add indices
+    image = image.addBands([ndvi, ndwi, nbr, evi]);
     
-    // Select bands you want to include
-    var bands = image.select(['B2','B3','B4','B8','B11','B12']) // Blue, Green, Red, NIR, SWIR1, SWIR2
-                  .addBands(ndvi)
-                  .addBands(ndwi)
-                  .addBands(nbr);
-    
-    return bands
+    // Add metadata
+    return image
       .set('system:time_start', image.get('system:time_start'))
       .set('IMAGE_ID', image.id());
   });
 
-// -----------------------------
-// Count images
-// -----------------------------
+// =======================
+// Sampling Setup
+// =======================
 var nImages = s2.size();
 print('Number of images:', nImages);
 
-// -----------------------------
-// Sampling
-// -----------------------------
 var targetRows = 1000;
 var pixelsPerImage = ee.Number(targetRows).divide(nImages).round();
 print('Pixels per image:', pixelsPerImage);
 
-var samples = s2.map(function(image){
+// =======================
+// Sample Each Image
+// =======================
+var samples = s2.map(function(image) {
   var sampled = image.sample({
     region: region,
     scale: 10,
     numPixels: pixelsPerImage,
-    geometries: true
-  }).map(function(f){
+    geometries: true,
+    seed: 42
+  }).map(function(f) {
     var coords = f.geometry().coordinates();
     return f.set({
       'Latitude': coords.get(1),
@@ -109,11 +121,18 @@ var samples = s2.map(function(image){
   return sampled;
 }).flatten();
 
-// -----------------------------
-// Export as CSV
-// -----------------------------
+// =======================
+// Export to Drive
+// =======================
 Export.table.toDrive({
   collection: samples,
-  description: 'Sentinel2_Sample_MultiBand',
+  description: 'Sentinel2_FullDataset_NoQA60_1000Rows',
   fileFormat: 'CSV'
 });
+
+// =======================
+// Visualization
+// =======================
+Map.centerObject(region, 13);
+Map.addLayer(region, {color: 'red'}, 'AOI');
+Map.addLayer(s2.first().select(['B4','B3','B2']), {min:0, max:3000}, 'True Color');
