@@ -1,9 +1,9 @@
-// =======================
-// Sentinel-2 Full Dataset Export Script (Fixed - No QA60)
-// =======================
+// =============================================
+// RICE HEALTH MONITORING DATASET (CSV EXPORT)
+// =============================================
 
 // Define Area of Interest (AOI)
-var region = ee.Geometry.Polygon([
+var aoi = ee.Geometry.Polygon([
   [[80.66115534588437,7.87079163026181],
    [80.66051161572081,7.872279514551037],
    [80.66106951519589,7.873554839689704],
@@ -53,58 +53,73 @@ var region = ee.Geometry.Polygon([
    [80.66115534588437,7.87079163026181]]
 ]);
 
-// =======================
-// Load Sentinel-2 SR Collection
-// =======================
+// ===============================
+// Load Sentinel-2 Surface Reflectance
+// ===============================
 var s2 = ee.ImageCollection('COPERNICUS/S2_SR')
-  .filterBounds(region)
+  .filterBounds(aoi)
   .filterDate('2018-01-01', '2025-12-31')
   .filter(ee.Filter.lt('CLOUDY_PIXEL_PERCENTAGE', 30))
   .select([
-    'B1','B2','B3','B4','B5','B6','B7','B8','B8A',
-    'B9','B11','B12','AOT','WVP','SCL',
-    'MSK_CLDPRB','MSK_SNWPRB'
-  ])
-  .map(function(image) {
-    // Compute NDVI
-    var ndvi = image.normalizedDifference(['B8', 'B4']).rename('NDVI');
-    // Compute NDWI
-    var ndwi = image.normalizedDifference(['B3', 'B8']).rename('NDWI');
-    // Compute NBR
-    var nbr = image.normalizedDifference(['B8', 'B12']).rename('NBR');
-    // Compute EVI
-    var evi = image.expression(
-      '2.5 * ((NIR - RED) / (NIR + 6 * RED - 7.5 * BLUE + 1))', {
-        'NIR': image.select('B8'),
-        'RED': image.select('B4'),
-        'BLUE': image.select('B2')
-      }).rename('EVI');
-    
-    // Add indices
-    image = image.addBands([ndvi, ndwi, nbr, evi]);
-    
-    // Add metadata
-    return image
-      .set('system:time_start', image.get('system:time_start'))
-      .set('IMAGE_ID', image.id());
-  });
+    'B1','B2','B3','B4','B5','B6','B7',
+    'B8','B8A','B9','B11','B12'
+  ]);
 
-// =======================
-// Sampling Setup
-// =======================
-var nImages = s2.size();
+// ===============================
+// Add Vegetation and Soil Indices
+// ===============================
+var addIndices = function(image) {
+  var ndvi = image.normalizedDifference(['B8', 'B4']).rename('NDVI');
+  var evi = image.expression(
+    '2.5 * ((NIR - RED) / (NIR + 6*RED - 7.5*BLUE + 1))', {
+      'NIR': image.select('B8'),
+      'RED': image.select('B4'),
+      'BLUE': image.select('B2')
+    }).rename('EVI');
+  var gci = image.expression('(NIR / GREEN) - 1', {
+    'NIR': image.select('B8'),
+    'GREEN': image.select('B3')
+  }).rename('GCI');
+  var ndwi = image.normalizedDifference(['B3', 'B8']).rename('NDWI');
+  var ndsmi = image.normalizedDifference(['B8A', 'B11']).rename('NDSMI');
+  var savi = image.expression(
+    '((NIR - RED) / (NIR + RED + 0.5)) * 1.5', {
+      'NIR': image.select('B8'),
+      'RED': image.select('B4')
+    }).rename('SAVI');
+  var bsi = image.expression(
+    '((SWIR + RED) - (NIR + BLUE)) / ((SWIR + RED) + (NIR + BLUE))', {
+      'SWIR': image.select('B11'),
+      'RED': image.select('B4'),
+      'NIR': image.select('B8'),
+      'BLUE': image.select('B2')
+    }).rename('BSI');
+  
+  // Convert all to Float32
+  return image
+    .addBands([ndvi, evi, gci, ndwi, ndsmi, savi, bsi])
+    .toFloat()
+    .set('system:time_start', image.get('system:time_start'))
+    .set('IMAGE_ID', image.id());
+};
+
+// Apply indices to all images
+var s2_with_indices = s2.map(addIndices);
+
+// ===============================
+// Sampling setup
+// ===============================
+var nImages = s2_with_indices.size();
 print('Number of images:', nImages);
 
 var targetRows = 1000;
 var pixelsPerImage = ee.Number(targetRows).divide(nImages).round();
 print('Pixels per image:', pixelsPerImage);
 
-// =======================
-// Sample Each Image
-// =======================
-var samples = s2.map(function(image) {
+// Sample images
+var samples = s2_with_indices.map(function(image) {
   var sampled = image.sample({
-    region: region,
+    region: aoi,
     scale: 10,
     numPixels: pixelsPerImage,
     geometries: true,
@@ -121,18 +136,21 @@ var samples = s2.map(function(image) {
   return sampled;
 }).flatten();
 
-// =======================
-// Export to Drive
-// =======================
+// ===============================
+// Export as CSV
+// ===============================
 Export.table.toDrive({
   collection: samples,
-  description: 'Sentinel2_FullDataset_NoQA60_1000Rows',
+  description: 'Sentinel2_RiceHealth_FullDataset_CSV',
   fileFormat: 'CSV'
 });
 
-// =======================
-// Visualization
-// =======================
-Map.centerObject(region, 13);
-Map.addLayer(region, {color: 'red'}, 'AOI');
-Map.addLayer(s2.first().select(['B4','B3','B2']), {min:0, max:3000}, 'True Color');
+// ===============================
+// Visualization (optional)
+// ===============================
+Map.centerObject(aoi, 13);
+Map.addLayer(aoi, {color: 'red'}, 'AOI');
+Map.addLayer(s2_with_indices.first().select(['B4','B3','B2']),
+             {min: 0, max: 3000}, 'True Color');
+Map.addLayer(s2_with_indices.first().select('NDVI'),
+             {min: 0, max: 1, palette: ['brown','yellow','green']}, 'NDVI');
