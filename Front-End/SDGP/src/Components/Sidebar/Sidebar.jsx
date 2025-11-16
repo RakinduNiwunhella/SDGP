@@ -1,5 +1,5 @@
 import React from 'react'
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 
 const navItems = [
   { id: 'dashboard', label: 'My Dashboard', icon: 'apps', active: true },
@@ -23,15 +23,22 @@ const Sidebar = () => {
         {/* Navigation list */}
         <nav className="flex flex-col gap-1">
           {navItems.map(item => (
-            <a
+            <NavLink
               key={item.id}
-              href={`${item.id}`}
-              className={`flex items-center gap-3 py-3 px-3 rounded-md transition-all duration-150
-                ${item.active ? 'text-white bg-linear-to-r from-blue-400 to-teal-400 shadow-md' : 'text-gray-700 hover:text-black'}`}
+              to={`/${item.id}`}
+              className={({ isActive }) =>
+                `flex items-center gap-3 py-3 px-3 rounded-md transition-all duration-150 ${
+                     (isActive || (location.pathname === '/' && item.id === 'dashboard'))
+                    ? 'text-white bg-gradient-to-r from-blue-400 to-teal-400 shadow-md dark:from-blue-800 dark:to-teal-800'
+                    : 'text-gray-700 hover:text-black dark:text-gray-300 dark:hover:text-white'
+                }`
+              }
             >
-              <span className="w-8 shrink-0 flex items-center justify-center material-symbols-outlined" style={{ fontSize: '22px' }}>{item.icon}</span>
+              <span className="w-8 shrink-0 flex items-center justify-center material-symbols-outlined" style={{ fontSize: '22px' }}>
+                {item.icon}
+              </span>
               <span className="font-medium">{item.label}</span>
-            </a>
+            </NavLink>
           ))}
         </nav>
       </div>
@@ -41,15 +48,22 @@ const Sidebar = () => {
         {/* Navigation list */}
         <nav className="flex flex-col gap-1">
           {bottomItems.map(item => (
-            <a
+            <NavLink
               key={item.id}
-              href={`${item.id}`}
-              className={`flex items-center gap-3 py-1 px-3 rounded-md transition-all duration-150
-                ${item.active ? 'text-white bg-linear-to-r from-blue-400 to-teal-400 shadow-md' : 'text-gray-700 hover:text-black'}`}
+              to={`/${item.id}`}
+              className={({ isActive }) =>
+                `flex items-center gap-3 py-1 px-3 rounded-md transition-all duration-150 ${
+                  isActive
+                    ? 'text-white bg-gradient-to-r from-blue-400 to-teal-400 shadow-md dark:from-blue-800 dark:to-teal-800'
+                    : 'text-gray-700 hover:text-black dark:text-gray-300 dark:hover:text-white'
+                }`
+              }
             >
-              <span className="w-8 shrink-0 flex items-center justify-center material-symbols-outlined" style={{ fontSize: '22px' }}>{item.icon}</span>
+              <span className="w-8 shrink-0 flex items-center justify-center material-symbols-outlined" style={{ fontSize: '22px' }}>
+                {item.icon}
+              </span>
               <span className="font-medium">{item.label}</span>
-            </a>
+            </NavLink>
           ))}
         </nav>
       </div>
