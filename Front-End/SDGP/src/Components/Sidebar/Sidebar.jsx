@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom';
 
 const navItems = [
   { id: 'dashboard', label: 'My Dashboard', icon: 'apps', active: true },
@@ -17,14 +18,14 @@ const bottomItems = [
 
 const Sidebar = () => {
   return (
-    <aside className="h-screen my-7 w-60 bg-white px-6 py-10 flex flex-col justify-between">
+    <aside className="h-screen w-60 bg-white px-6 py-10 flex flex-col justify-between">
       <div>
         {/* Navigation list */}
         <nav className="flex flex-col gap-1">
           {navItems.map(item => (
             <a
               key={item.id}
-              href={`#${item.id}`}
+              href={`${item.id}`}
               className={`flex items-center gap-3 py-3 px-3 rounded-md transition-all duration-150
                 ${item.active ? 'text-white bg-linear-to-r from-blue-400 to-teal-400 shadow-md' : 'text-gray-700 hover:text-black'}`}
             >
@@ -42,7 +43,7 @@ const Sidebar = () => {
           {bottomItems.map(item => (
             <a
               key={item.id}
-              href={`#${item.id}`}
+              href={`${item.id}`}
               className={`flex items-center gap-3 py-1 px-3 rounded-md transition-all duration-150
                 ${item.active ? 'text-white bg-linear-to-r from-blue-400 to-teal-400 shadow-md' : 'text-gray-700 hover:text-black'}`}
             >
