@@ -7,18 +7,18 @@ function Overview() {
       <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-16">
         {/* LEFT SECTION */}
         <div className="flex flex-col justify-center">
-          <h2 className="text-4xl md:text-5xl font-bold leading-tight text-gray-900 fade-in">
+          <h2 className="text-4xl md:text-5xl font-bold leading-tight text-gray-900">
            Stepping Up Agricultural  <br /> Intelligence in Sri Lanka
           </h2>
 
-          <p className="mt-6 text-lg text-gray-700 leading-relaxed fade-in">
+          <p className="mt-6 text-lg text-gray-700 leading-relaxed">
             Alongside farmers, government agencies and researchers, we are transforming how Sri Lanka monitors paddy fields—reducing crop losses, 
             strengthening food security, and supporting smarter decisions through satellite-powered insights.
           </p>
         </div>
 
         {/* RIGHT SECTION */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-10 fade-in">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-10 ">
 
           {/* Box 1 */}
           <div className="border-l-8 border-green-800 pl-0 md:pl-10 rounded-lg p-8 shadow-lg  bg-white " >
