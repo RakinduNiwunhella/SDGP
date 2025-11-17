@@ -1,5 +1,4 @@
 import React from "react";
-import './Overview.css';
 
 function Overview() {
   return (
@@ -21,7 +20,7 @@ function Overview() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-10 ">
 
           {/* Box 1 */}
-          <div className="border-l-8 border-green-800 pl-0 md:pl-10 rounded-lg p-8 shadow-lg  bg-white " >
+          <div className="border-l-8 border-green-800 pl-0 md:pl-10 rounded-lg p-8 shadow-lg  bg-white transform transition duration-300 ease-in-out hover:scale-105 hover:-translate-y-2" >
             <h3 className="text-xl font-bold text-green-800 flex items-center gap-1">
               Who We Are <span className="text-green-700">&gt;</span>
             </h3>
@@ -30,7 +29,7 @@ function Overview() {
           </div>
 
           {/* Box 2 */}
-          <div className="border-l-8 border-green-800 pl-0 md:pl-10 rounded-lg p-8 shadow-lg  bg-white ">
+          <div className="border-l-8 border-green-800 pl-0 md:pl-10 rounded-lg p-8 shadow-lg  bg-white transform transition duration-300 ease-in-out hover:scale-105 hover:-translate-y-2">
             <h3 className="text-xl font-bold text-green-800 flex items-center gap-1">
               What We Do <span className="text-green-700">&gt;</span>
             </h3>
@@ -40,7 +39,7 @@ function Overview() {
           </div>
 
           {/* Box 3 */}
-          <div className="border-l-8 border-green-800 pl-0 md:pl-10 rounded-lg p-8 shadow-lg  bg-white ">
+          <div className="border-l-8 border-green-800 pl-0 md:pl-10 rounded-lg p-8 shadow-lg  bg-white transform transition duration-300 ease-in-out hover:scale-105 hover:-translate-y-2">
             <h3 className="text-xl font-bold text-green-800 flex items-center gap-1">
               How To Help <span className="text-green-700">&gt;</span>
             </h3>
@@ -50,7 +49,7 @@ function Overview() {
           </div>
 
           {/* Box 4 */}
-          <div className="border-l-8 border-green-800 pl-0 md:pl-10 rounded-lg p-8 shadow-lg bg-white ">
+          <div className="border-l-8 border-green-800 pl-0 md:pl-10 rounded-lg p-8 shadow-lg bg-white transform transition duration-300 ease-in-out hover:scale-105 hover:-translate-y-2">
             <h3 className="text-xl font-bold text-green-800 flex items-center gap-1">
               Where We Work <span className="text-green-700">&gt;</span>
             </h3>
