@@ -6,7 +6,7 @@ function Overview() {
     <div className="w-full bg-white py-20 px-8 md:px-20">
       <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-16">
         {/* LEFT SECTION */}
-        <div>
+        <div className="flex flex-col justify-center">
           <h2 className="text-4xl md:text-5xl font-bold leading-tight text-gray-900 fade-in">
            Stepping Up Agricultural  <br /> Intelligence in Sri Lanka
           </h2>
