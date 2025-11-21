@@ -10,7 +10,7 @@ function Mission() {
         <div className="relative lg:grid lg:grid-cols-12 lg:gap-8 lg:items-center pb-32">
 
           {/* Left Image */}
-          <div className="lg:col-span-6">
+          <div className="relative w-full lg:col-span-6">
             <img
               src={rice}
               alt="Forest path"
@@ -29,7 +29,7 @@ function Mission() {
               </h2>
               <p className="mt-4 text-gray-700">
                 Every acre we protect and every river mile we restore begins with you.
-                Your support helps us take on the dual threats of climate change and 
+                Your support helps us take on the dual threats of climate change and
                 biodiversity loss across 80+ countries and territories.
               </p>
               <button className="mt-6 bg-green-800 text-white px-6 py-3 rounded-md font-semibold hover:bg-green-900 transition">
@@ -41,14 +41,13 @@ function Mission() {
           {/* Overlapping Newsletter Card */}
           <div
             className="
-              absolute left-70 translate-x-50
-              bottom-50 translate-y-1/2
-              bg-white border-t-4 border-green-800 
-              shadow-xl rounded-lg 
-              w-11/12 md:w-3/4 lg:w-5/8 px-20 py-16
+              bg-white border-t-4 border-green-800 shadow-xl rounded-lg
+              w-11/12 md:w-3/4 lg:w-2/3 px-6 py-8 lg:px-10 lg:py-12
+              mx-auto mt-8 lg:mt-0
+              lg:absolute lg:left-5/8 lg:-translate-x-1/2 lg:-bottom-1 lg:transform
             "
           >
-            <h3 className="text-2xl font-bold text-gray-900 ">
+            <h3 className="text-2xl font-bold text-gray-900">
               Get our latest conservation news and see how we’re protecting our natural world.
             </h3>
 
@@ -72,6 +71,7 @@ function Mission() {
               </button>
             </form>
           </div>
+
 
         </div>
       </div>
