@@ -5,6 +5,7 @@ import Info from './Components/Info'
 import Mission from './Components/Mission'
 import Goals from './Components/Goals'
 import Features from './Components/Features'
+import Register from './Components/Register'
 import Footer from './Components/Footer'
 
 
@@ -17,9 +18,10 @@ function App() {
     <Mission/>
     <Goals/>
     <Features/>
+    <Register/>
     <Footer/>
 
-</>
+  </>
   )
 }
 
