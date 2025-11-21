@@ -1,6 +1,6 @@
 import React from "react";
 
-function Overview() {
+function Info() {
   return (
     <div className="w-full bg-white py-20 px-8 md:px-20">
       <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-16">
@@ -67,4 +67,4 @@ function Overview() {
   );
 }
 
-export default Overview;
+export default Info;
