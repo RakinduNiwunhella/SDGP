@@ -62,7 +62,17 @@ function App() {
 
   return (
     <>
+<<<<<<< HEAD
       <Navbar onOpenRegister={() => setOpenRegister(true)} />
+=======
+    <Navbar/>
+    <Hero/>
+    <Info/>
+    <Mission/>
+    <Goals/>
+    <Features/>
+    <Footer/>
+>>>>>>> main
 
       <Hero />
       <Info />

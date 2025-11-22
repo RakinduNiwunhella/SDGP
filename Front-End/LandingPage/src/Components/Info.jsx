@@ -1,8 +1,8 @@
 import React from "react";
 import Reveal from "./Reveal";
 
-function Overview() {return(
-   
+function Info() {
+  return (
     <div className="w-full bg-white py-20 px-8 md:px-20">
       <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-16">
         {/* LEFT SECTION */}
@@ -82,4 +82,4 @@ function Overview() {return(
 ); 
 }
 
-export default Overview;
+export default Info;
