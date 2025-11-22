@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from "react";
+import SplashScreen from "./Components/SplashScreen";
 import Navbar from './Components/Navbar'
 import Hero from './Components/Hero'
 import Info from './Components/Info'
@@ -10,7 +11,8 @@ import Register from './Components/Register'
 import Footer from './Components/Footer'
 
 function App() {
-  const [openRegister, setOpenRegister] = useState(false);
+  const [loading, setLoading] = useState(true);
+    const [openRegister, setOpenRegister] = useState(false);
   // local mount flag for modal entrance animation
   const [mountedModal, setMountedModal] = useState(false);
 
@@ -21,6 +23,7 @@ function App() {
     const t = setTimeout(() => setMountedModal(true), 20);
 
     // cleanup runs when openRegister becomes false (modal closes)
+
     return () => {
       clearTimeout(t);
       setMountedModal(false);
@@ -105,3 +108,4 @@ function App() {
 }
 
 export default App
+
