@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 
-export default function useInView({ root = null, rootMargin = '0px', threshold = 0.12 } = {}) {
+export default function useInView({ root = null, rootMargin = '0px 0px -10% 0px', threshold = 0.35 } = {}) {
   const ref = useRef(null);
   const [isIntersecting, setIsIntersecting] = useState(false);
 
