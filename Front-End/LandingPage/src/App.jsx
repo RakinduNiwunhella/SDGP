@@ -62,25 +62,14 @@ function App() {
 
   return (
     <>
-<<<<<<< HEAD
-      <Navbar onOpenRegister={() => setOpenRegister(true)} />
-=======
     <Navbar/>
     <Hero/>
     <Info/>
     <Mission/>
     <Goals/>
     <Features/>
+    <Contact/>
     <Footer/>
->>>>>>> main
-
-      <Hero />
-      <Info />
-      <Mission />
-      <Goals />
-      <Features />
-      <Contact/>
-      <Footer />
 
       {/* MODAL */}
 {openRegister && (
