@@ -55,9 +55,9 @@ export default function Features() {
                 {feature.title}
               </h3>
               <p className="text-gray-600 mb-4">{feature.description}</p>
-              <button className="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition">
+              {/* <button className="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition">
                 View Details
-              </button>
+              </button> */}
             </div>
           </div>
         ))}
