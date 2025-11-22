@@ -1,8 +1,10 @@
 import React from "react";
 import rice from "../assets/rice.jpg";
+import Reveal from "./Reveal";
 
 function Mission() {
   return (
+    <Reveal>
     <section className="bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
@@ -76,6 +78,7 @@ function Mission() {
         </div>
       </div>
     </section>
+    </Reveal>
   );
 }
 
