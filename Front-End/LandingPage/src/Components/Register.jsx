@@ -71,8 +71,8 @@ function Register() {
   };
 
   return (
-    <section className="bg-gray-100 py-12">
-      <div className="max-w-md mx-auto border-l-7 border-green-800 pl-0 md:pl-10 rounded-lg p-8 shadow-lg  bg-white transform transition duration-300 ease-in-out hover:scale-101 hover:-translate-y-2">
+    <section>
+      <div className="max-w-md mx-auto border-l-7 border-green-800 pl-0 md:pl-10 rounded-lg p-8 shadow-lg  bg-white transform transition duration-300 ease-in-out hover:scale-100 hover:-translate-y-1">
         <h2 className="text-2xl font-bold mb-6 text-gray-900">Register</h2>
 
         {message && (
@@ -171,7 +171,7 @@ function Register() {
             <button
               type="submit"
               disabled={loading}
-              className="inline-flex items-center justify-center px-4 py-2 bg-indigo-600 text-white rounded hover:bg-indigo-700 disabled:opacity-60"
+              className="inline-flex items-center justify-center px-4 py-2 bg-red-600 text-white rounded hover:bg-green-700 disabled:opacity-60 transform transition duration-400"
             >
               {loading ? "Registering..." : "Register"}
             </button>
