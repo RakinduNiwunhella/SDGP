@@ -9,6 +9,8 @@ import Contact from './Components/Contact';
 import Register from './Components/Register';
 import Footer from './Components/Footer';
 import SplashScreen from './Components/SplashScreen';
+import team from './Components/Team'
+import Team from './Components/Team';
 
 function App() {
   // Splash screen state
@@ -73,6 +75,7 @@ function App() {
           <Mission />
           <Goals />
           <Features />
+          <Team/>
           <Contact />
           <Footer />
 
