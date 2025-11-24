@@ -42,7 +42,7 @@ const goals = [
 
 export default function Goals() {
   return (
-    <section className="py-16 bg-gray-50">
+    <section id="goal" className="py-16 bg-gray-50">
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
 
         <h2 className="text-5xl font-extrabold text-gray-900 leading-tight">

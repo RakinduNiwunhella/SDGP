@@ -3,6 +3,7 @@ import { Mail, Phone, Ticket } from "lucide-react";
 
 function Contact() {
   return (
+    <section id="contact">
     <div className="w-full bg-gray-50 py-20 px-6 md:px-12">
       <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-20 items-start">
 
@@ -97,6 +98,7 @@ function Contact() {
 
       </div>
     </div>
+    </section>
   );
 }
 
