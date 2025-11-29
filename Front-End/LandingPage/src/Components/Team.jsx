@@ -3,40 +3,40 @@ import React from 'react'
 function Team() {
   const people = [
     {
-      name: "Lindsay Walton",
+      name: "Rakindu Niwunhella",
       role: "Front-end Developer",
       imageUrl:
-        "https://images.unsplash.com/photo-1502685104226-ee32379fefbe",
+        "public/images/rakindu.png",
     },
     {
-      name: "Courtney Henry",
+      name: "Sanila Wijesekara",
       role: "Designer",
       imageUrl:
-        "https://images.unsplash.com/photo-1524504388940-b1c1722653e1",
+        "public/images/sanila.jpg",
     },
     {
-      name: "Tom Cook",
+      name: "Chethina Fernando",
       role: "Director of Product",
       imageUrl:
-        "https://images.unsplash.com/photo-1607746882042-944635dfe10e",
+        "public/images/chethina.png",
     },
     {
-      name: "Whitney Francis",
+      name: "Binada Mathara Arachchige",
       role: "Copywriter",
       imageUrl:
-        "https://images.unsplash.com/photo-1494790108377-be9c29b29330",
+        "public/images/binada.jpg",
     },
     {
-      name: "Leonard Krasner",
+      name: "Pavithma Fernando",
       role: "Senior Designer",
       imageUrl:
-        "https://images.unsplash.com/photo-1517841905240-472988babdf9",
+        "public/images/pavithma.jpg",
     },
     {
-      name: "Floyd Miles",
+      name: "Sithuli Basnayake",
       role: "Principal Designer",
       imageUrl:
-        "https://images.unsplash.com/photo-1500648767791-00dcc994a43e",
+        "public/images/sithuli.png",
     },
   ];
 
