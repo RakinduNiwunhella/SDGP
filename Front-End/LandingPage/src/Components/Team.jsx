@@ -1,4 +1,5 @@
 import React from 'react'
+import { FaGithub, FaLinkedin } from "react-icons/fa";
 
 function Team() {
   const people = [
@@ -24,7 +25,7 @@ function Team() {
       name: "Binada Mathara Arachchige",
       role: "Copywriter",
       imageUrl:
-        "public/images/binada.jpg",
+        "public/images/binada.png",
     },
     {
       name: "Pavithma Fernando",
@@ -55,15 +56,18 @@ function Team() {
         </div>
 
         {/* Grid */}
-        <div className="mx-auto mt-16 grid max-w-4xl grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-14">
+        <div className="mx-auto mt-16 grid max-w-4xl grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-14 ">
           {people.map((person) => (
-            <div key={person.name} className="text-center">
+            <div
+              key={person.name}
+              className="text-center transform transition-all duration-300 ease-in hover:scale-105 hover:shadow-xl rounded-lg overflow-hidden bg-white p-4"
+            >
               <img
-                className="mx-auto h-48 w-full rounded-lg object-cover"
+                className="mx-auto h-85 w-95 object-cover rounded-lg"
                 src={person.imageUrl}
                 alt={person.name}
               />
-              <h3 className="mt-6 text-lg font-semibold text-gray-900">
+              <h3 className="mt-6 text-lg font-semibold text-gray-900 ">
                 {person.name}
               </h3>
               <p className="text-sm text-gray-600">{person.role}</p>
@@ -71,10 +75,10 @@ function Team() {
               {/* Icons */}
               <div className="mt-4 flex items-center justify-center gap-x-4">
                 <a href="#" className="text-gray-400 hover:text-gray-600">
-                  ✕
+                  <FaGithub />
                 </a>
                 <a href="#" className="text-gray-400 hover:text-gray-600">
-                  🔗
+                  <FaLinkedin />
                 </a>
               </div>
             </div>
