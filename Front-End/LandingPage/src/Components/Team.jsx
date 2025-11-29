@@ -8,36 +8,48 @@ function Team() {
       role: "Front-end Developer",
       imageUrl:
         "public/images/rakindu.png",
+      github: "https://github.com/search?q=Rakindu+Niwunhella",
+      linkedin: "#",
     },
     {
       name: "Sanila Wijesekara",
       role: "Designer",
       imageUrl:
         "public/images/sanila.jpg",
+      github: "https://github.com/search?q=Sanila+Wijesekara",
+      linkedin: "https://www.linkedin.com/search/results/all/?keywords=Sanila%20Wijesekara",
     },
     {
       name: "Chethina Fernando",
       role: "Director of Product",
       imageUrl:
         "public/images/chethina.png",
+      github: "https://github.com/search?q=Chethina+Fernando",
+      linkedin: "https://www.linkedin.com/search/results/all/?keywords=Chethina%20Fernando",
     },
     {
       name: "Binada Mathara Arachchige",
       role: "Copywriter",
       imageUrl:
         "public/images/binada.png",
+      github: "https://github.com/search?q=Binada+Mathara+Arachchige",
+      linkedin: "https://www.linkedin.com/search/results/all/?keywords=Binada%20Mathara%20Arachchige",
     },
     {
       name: "Pavithma Fernando",
       role: "Senior Designer",
       imageUrl:
         "public/images/pavithma.jpg",
+      github: "https://github.com/search?q=Pavithma+Fernando",
+      linkedin: "https://www.linkedin.com/search/results/all/?keywords=Pavithma%20Fernando",
     },
     {
       name: "Sithuli Basnayake",
       role: "Principal Designer",
       imageUrl:
         "public/images/sithuli.png",
+      github: "https://github.com/search?q=Sithuli+Basnayake",
+      linkedin: "https://www.linkedin.com/search/results/all/?keywords=Sithuli%20Basnayake",
     },
   ];
 
@@ -74,10 +86,22 @@ function Team() {
 
               {/* Icons */}
               <div className="mt-4 flex items-center justify-center gap-x-4">
-                <a href="#" className="text-gray-400 hover:text-gray-600">
+                <a
+                  href={person.github}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={`${person.name} GitHub`}
+                  className="text-gray-400 hover:text-gray-600"
+                >
                   <FaGithub />
                 </a>
-                <a href="#" className="text-gray-400 hover:text-gray-600">
+                <a
+                  href={person.linkedin}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={`${person.name} LinkedIn`}
+                  className="text-gray-400 hover:text-gray-600"
+                >
                   <FaLinkedin />
                 </a>
               </div>
