@@ -69,7 +69,7 @@ export default function Goals() {
               </div>
 
               <div>
-                <div className="text-4xl font-bold text-gray-900">{g.id}</div>
+                <div className="text-2xl font-bold text-gray-900">{g.id}</div>
                 <p className="mt-2 text-sm text-gray-600">{g.desc}</p>
               </div>
             </div>
