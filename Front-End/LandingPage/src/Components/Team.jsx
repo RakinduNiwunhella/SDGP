@@ -8,48 +8,48 @@ function Team() {
       role: "Front-end Developer",
       imageUrl:
         "public/images/rakindu.png",
-      github: "https://github.com/search?q=Rakindu+Niwunhella",
-      linkedin: "#",
+      github: "https://github.com/RakinduNiwunhella",
+      linkedin: "https://www.linkedin.com/in/rakindu-niwunhella-388b41307?lipi=urn%3Ali%3Apage%3Ad_flagship3_profile_view_base_contact_details%3Bngmhzz0WS%2FCdnSjZnlmA%2Fg%3D%3D"
     },
     {
       name: "Sanila Wijesekara",
-      role: "Designer",
+      role: "AI and backend engineer",
       imageUrl:
         "public/images/sanila.jpg",
-      github: "https://github.com/search?q=Sanila+Wijesekara",
-      linkedin: "https://www.linkedin.com/search/results/all/?keywords=Sanila%20Wijesekara",
+      github: "https://github.com/Sanila-577",
+      linkedin: "https://www.linkedin.com/in/sanila-wijesekara"
     },
     {
       name: "Chethina Fernando",
-      role: "Director of Product",
+      role: "Database architect",
       imageUrl:
         "public/images/chethina.png",
-      github: "https://github.com/search?q=Chethina+Fernando",
-      linkedin: "https://www.linkedin.com/search/results/all/?keywords=Chethina%20Fernando",
+      github: "https://github.com/Chethi2003",
+      linkedin: "https://www.linkedin.com/in/fernandochethina2003?lipi=urn%3Ali%3Apage%3Ad_flagship3_profile_view_base_contact_details%3B7O6IhD1nTBKlh46cnMe3mw%3D%3D"
     },
     {
-      name: "Binada Mathara Arachchige",
-      role: "Copywriter",
+      name: "Binada Matara Arachchige",
+      role: "AI and backend engineer",
       imageUrl:
         "public/images/binada.png",
-      github: "https://github.com/search?q=Binada+Mathara+Arachchige",
-      linkedin: "https://www.linkedin.com/search/results/all/?keywords=Binada%20Mathara%20Arachchige",
+      github: "https://github.com/binadacode",
+      linkedin: "https://www.linkedin.com/in/binada-matara-arachchige-078b30226?lipi=urn%3Ali%3Apage%3Ad_flagship3_profile_view_base_contact_details%3BsBhP2K9MSS2XuyZ7XN3f4w%3D%3D"
     },
     {
       name: "Pavithma Fernando",
-      role: "Senior Designer",
+      role: "UI/UX designer",
       imageUrl:
         "public/images/pavithma.jpg",
-      github: "https://github.com/search?q=Pavithma+Fernando",
-      linkedin: "https://www.linkedin.com/search/results/all/?keywords=Pavithma%20Fernando",
+      github: "https://github.com/pavithma",
+      linkedin: "https://www.linkedin.com/in/pavithma-fernando-1a8468324?lipi=urn%3Ali%3Apage%3Ad_flagship3_profile_view_base_contact_details%3BSS8l6wDyQZil2h3pj7AO0Q%3D%3D"
     },
     {
       name: "Sithuli Basnayake",
-      role: "Principal Designer",
+      role: "UI/UX designer",
       imageUrl:
         "public/images/sithuli.png",
-      github: "https://github.com/search?q=Sithuli+Basnayake",
-      linkedin: "https://www.linkedin.com/search/results/all/?keywords=Sithuli%20Basnayake",
+      github: "https://github.com/basnayake4",
+      linkedin: "https://www.linkedin.com/in/sithuli-basnayake-42101022a?lipi=urn%3Ali%3Apage%3Ad_flagship3_profile_view_base_contact_details%3BEw7JM8gITt2SJLYJUcagMQ%3D%3D"
     },
   ];
 
@@ -93,7 +93,7 @@ function Team() {
                   aria-label={`${person.name} GitHub`}
                   className="text-gray-400 hover:text-gray-600"
                 >
-                  <FaGithub />
+                    <FaGithub className="w-6 h-6" />
                 </a>
                 <a
                   href={person.linkedin}
@@ -102,7 +102,7 @@ function Team() {
                   aria-label={`${person.name} LinkedIn`}
                   className="text-gray-400 hover:text-gray-600"
                 >
-                  <FaLinkedin />
+                    <FaLinkedin className="w-6 h-6" />
                 </a>
               </div>
             </div>
@@ -112,5 +112,6 @@ function Team() {
     </div>
   );
 }
+
 
 export default Team
