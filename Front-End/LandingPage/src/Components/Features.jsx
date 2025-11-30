@@ -6,25 +6,25 @@ export default function Features() {
       title: "Real-time Statistics",
       description:
         "Up-to-date data on paddy cultivation metrics across all regions with comprehensive dashboards showing yield predictions, growth stages, and regional comparisons.",
-      img: "/mnt/data/7fc48c69-f59e-4d08-8b5b-1a3b11c6bb75.png",
+      img: "public/images/Real-timeStatistics.jpg",
     },
     {
       title: "Interactive Visualization",
       description:
         "Dynamic maps showing paddy land distribution with zoom capabilities, layer controls, and real-time updates for accurate field monitoring.",
-      img: "/mnt/data/7fc48c69-f59e-4d08-8b5b-1a3b11c6bb75.png",
+      img: "public/images/InteractiveVisualization.jpg",
     },
     {
       title: "Boundary Delineation",
       description:
         "Precise mapping of paddy field boundaries using high-resolution satellite imagery with accuracy up to 1 meter for perfect land management.",
-      img: "/mnt/data/7fc48c69-f59e-4d08-8b5b-1a3b11c6bb75.png",
+      img: "public/images/BoundaryDelineation.jpg",
     },
     {
       title: "Crop Health Monitoring",
       description:
         "NDVI and other vegetation indices calculated weekly to assess paddy health, with alerts for potential issues like disease or nutrient deficiencies.",
-      img: "/mnt/data/7fc48c69-f59e-4d08-8b5b-1a3b11c6bb75.png",
+      img: "public/images/CropHealthMonitoring.jpg",
     },
   ];
 
