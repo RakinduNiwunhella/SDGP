@@ -93,7 +93,7 @@ function Team() {
                   aria-label={`${person.name} GitHub`}
                   className="text-gray-400 hover:text-gray-600"
                 >
-                  <FaGithub />
+                    <FaGithub className="w-6 h-6" />
                 </a>
                 <a
                   href={person.linkedin}
@@ -102,7 +102,7 @@ function Team() {
                   aria-label={`${person.name} LinkedIn`}
                   className="text-gray-400 hover:text-gray-600"
                 >
-                  <FaLinkedin />
+                    <FaLinkedin className="w-6 h-6" />
                 </a>
               </div>
             </div>
