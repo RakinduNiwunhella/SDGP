@@ -5,7 +5,7 @@ import Reveal from "./Reveal";
 function Mission() {
   return (
     <Reveal>
-    <section className="bg-white">
+    <section id="mission" className="bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
         {/* Wrap everything in relative so card can overlap */}
