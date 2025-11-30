@@ -9,7 +9,7 @@ function Info() {
         {/* LEFT SECTION */}
         <Reveal>
         <div className="flex flex-col justify-center">
-          <h2 className="text-4xl md:text-5xl font-bold leading-tight text-gray-900">
+          <h2 className="text-4xl md:text-5xl font-bold leading-tight text-gray-900 text-center">
            Stepping Up Agricultural  <br /> Intelligence in Sri Lanka
           </h2>
 
