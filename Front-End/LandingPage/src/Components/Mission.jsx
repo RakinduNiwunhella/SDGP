@@ -51,8 +51,8 @@ function Mission() {
             "
           >
             <h3 className="text-2xl font-bold text-gray-900">
-              Get our latest conservation news and see how we’re protecting our natural world.
-            </h3>
+Be the first to know when RiceVision launches.
+Get early access updates directly to your inbox.            </h3>
 
             <form className="mt-4 flex flex-col sm:flex-row gap-2">
               <div className="flex flex-col w-full">
@@ -68,9 +68,9 @@ function Mission() {
 
               <button
                 type="submit"
-                className="bg-green-800 text-white px-5 py-2 rounded-md font-semibold hover:bg-green-900 transition self-end"
+                className="bg-green-800 text-white px-5 py-2 rounded-md font-semibold text-m whitespace-nowrap hover:bg-green-900 transition self-end"
               >
-                SIGNUP
+                Notify Me
               </button>
             </form>
           </div>
