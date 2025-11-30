@@ -27,15 +27,16 @@ function Mission() {
                 Our Mission
               </p>
               <h2 className="mt-2 text-3xl md:text-4xl font-bold text-gray-900">
-                Conserving the lands and waters on which all life depends
-              </h2>
+                Turning space-driven insights into healthier fields, empowered farmers, and a resilient Sri Lankan future.            </h2>
               <p className="mt-4 text-gray-700">
-                Every acre we protect and every river mile we restore begins with you.
-                Your support helps us take on the dual threats of climate change and
-                biodiversity loss across 80+ countries and territories.
+                RiceVision's mission is to revolutionize rice cultivation and national food planning in Sri Lanka by delivering an 
+                integrated, satellite-powered decision-support system. By fusing optical and radar imagery with machine learning models,
+                 the platform provides continuous field monitoring, early warnings for drought, pests, and disease, and district-level 
+                 yield forecasts. This enables farmers to protect their crops, policymakers to make evidence-based import decisions, and
+                  the nation to move toward a more secure, self-sufficient rice economy.
               </p>
               <button className="mt-6 bg-green-800 text-white px-6 py-3 rounded-md font-semibold hover:bg-green-900 transition">
-                Donate Now
+                Register Now
               </button>
             </div>
           </div>

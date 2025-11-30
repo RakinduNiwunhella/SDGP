@@ -8,8 +8,8 @@ function Info() {
       <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-16">
         {/* LEFT SECTION */}
         <Reveal>
-        <div className="flex flex-col justify-center">
-          <h2 className="text-4xl md:text-5xl font-bold leading-tight text-gray-900 text-center">
+        <div className="flex flex-col justify-center h-full">
+          <h2 className="text-4xl md:text-5xl font-bold leading-tight text-gray-900 ">
            Stepping Up Agricultural  <br /> Intelligence in Sri Lanka
           </h2>
 
