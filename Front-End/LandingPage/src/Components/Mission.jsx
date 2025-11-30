@@ -2,7 +2,7 @@ import React from "react";
 import rice from "../assets/rice.jpg";
 import Reveal from "./Reveal";
 
-function Mission() {
+const Mission =({onOpenRegister})=> {
   return (
     <Reveal>
     <section id="mission" className="bg-white">
@@ -35,7 +35,7 @@ function Mission() {
                  yield forecasts. This enables farmers to protect their crops, policymakers to make evidence-based import decisions, and
                   the nation to move toward a more secure, self-sufficient rice economy.
               </p>
-              <button className="mt-6 bg-green-800 text-white px-6 py-3 rounded-md font-semibold hover:bg-green-900 transition">
+              <button onClick = {onOpenRegister} className="mt-6 bg-green-800 text-white px-6 py-3 rounded-md font-semibold hover:bg-green-900 transition">
                 Register Now
               </button>
             </div>
