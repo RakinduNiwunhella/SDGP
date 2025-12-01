@@ -11,7 +11,7 @@ const Navbar = ({ onOpenRegister }) => {
       </div>
 
       <div className="flex items-center gap-10 text-sm font-semibold">
-        <a href="#overview" className="hover:text-green-700">Overview</a>
+        <a href="#info" className="hover:text-green-700">Overview</a>
         <a href="#mission" className="hover:text-green-700">Mission</a>
         <a href="#goal" className="hover:text-green-700">Goal</a>
         <a href="#features" className="hover:text-green-700">Features</a>
