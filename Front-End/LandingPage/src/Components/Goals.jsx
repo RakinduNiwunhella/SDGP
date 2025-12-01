@@ -3,37 +3,37 @@ import React from "react";
 
 const goals = [
   {
-    id: "90%",
-    title: "Achieve 90% accuracy in rice crop health detection",
+    id: "95% Accuracy Data",
+    title: "Achieve 95% accuracy in rice crop health detection",
     desc: "Using satellite indices like NDVI, NDWI, LSWI, and red-edge bands, our system delivers highly accurate health classification to help farmers make informed decisions.",
     icon: "eco",
   },
   {
-    id: "3W",
+    id: "Paddy Monitoring",
     title: "Detect crop stress up to 3 weeks earlier",
     desc: "Identify water stress, disease, nutrient deficiency, and pest threats long before they become visible—reducing preventable yield losses.",
     icon: "visibility",
   },
   {
-    id: "80%",
+    id: "Predict Harvest Yield",
     title: "Predict harvest yield with 80%+ reliability",
     desc: "Our machine learning model estimates expected yield with high accuracy, helping farmers and government agencies plan for production and imports.",
     icon: "analytics",
   },
   {
-    id: "24/7",
+    id: "Continuous Satellite Monitoring",
     title: "Provide automated 24/7 satellite monitoring",
     desc: "Leveraging Sentinel-2 data, we offer continuous, cloud-filtered monitoring of rice fields—without requiring manual field visits.",
     icon: "satellite_alt",
   },
   {
-    id: "30%",
+    id: "Reduce Human Efforts",
     title: "Reduce manual inspection efforts by 30%",
     desc: "By automating field health assessments, the system cuts down time, travel, and labor required for physical inspections.",
     icon: "assignment_turned_in",
   },
   {
-    id: "1M",
+    id: "Impact 1 Million Farmers",
     title: "Impact 1 million Sri Lankan farmers",
     desc: "Our platform aims to become a nationwide digital tool that empowers farmers with real-time insights, boosting food security and climate resilience.",
     icon: "group",
@@ -69,7 +69,7 @@ export default function Goals() {
               </div>
 
               <div>
-                <div className="text-4xl font-bold text-gray-900">{g.id}</div>
+                <div className="text-2xl font-bold text-gray-900">{g.id}</div>
                 <p className="mt-2 text-sm text-gray-600">{g.desc}</p>
               </div>
             </div>
