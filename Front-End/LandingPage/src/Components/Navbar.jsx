@@ -2,7 +2,7 @@ import React from 'react'
 
 const Navbar = ({ onOpenRegister }) => {
   return (
-    <nav className="w-full flex items-center justify-between px-10 py-1 shadow-sm bg-white">
+    <nav className="sticky top-0 z-50 w-full flex items-center justify-between px-10 py-1 shadow-sm bg-white">
 
       <div className="flex items-center gap-2">
         <span className="text-2xl font-bold">
