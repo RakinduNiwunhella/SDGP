@@ -71,7 +71,7 @@ function App() {
 
           <Hero />
           <Info />
-          <Mission />
+          <Mission onOpenRegister={() => setOpenRegister(true)}/>
           <Goals />
           <Features />
           <Team/>
