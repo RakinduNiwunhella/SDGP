@@ -11,7 +11,7 @@ const goals = [
   {
     id: "Paddy Monitoring",
     title: "Detect crop stress up to 3 weeks earlier",
-    desc: "Identify water stress, disease, nutrient deficiency, and pest threats long before they become visible—reducing preventable yield losses.",
+    desc: "Identify water stress, disease, nutrient deficiency, and pest threats long before they become visible, reducing preventable yield losses.",
     icon: "visibility",
   },
   {
@@ -23,7 +23,7 @@ const goals = [
   {
     id: "Continuous Satellite Monitoring",
     title: "Provide automated 24/7 satellite monitoring",
-    desc: "Leveraging Sentinel-2 data, we offer continuous, cloud-filtered monitoring of rice fields—without requiring manual field visits.",
+    desc: "Leveraging Sentinel-2 data, we offer continuous, cloud-filtered monitoring of rice fields, without requiring manual field visits.",
     icon: "satellite_alt",
   },
   {

@@ -9,7 +9,7 @@ export default function Features() {
       img: "public/images/Real-timeStatistics.jpg",
     },
     {
-      title: "Interactive Visualization",
+      title: "Interactive Visualisation",
       description:
         "Dynamic maps showing paddy land distribution with zoom capabilities, layer controls, and real-time updates for accurate field monitoring.",
       img: "public/images/InteractiveVisualization.jpg",

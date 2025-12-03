@@ -30,7 +30,7 @@ function Info() {
               Who We Are <span className="text-green-700">&gt;</span>
             </h3>
             <p className="text-gray-700 mt-3">
-            We are building Sri Lanka's first satellite-based rice monitoring and yeild prediction system using
+            We are building Sri Lanka's first satellite-based rice monitoring and yield prediction system using
              Earth Observation, machine learning, and field data.</p>
           </div>
           </Reveal>

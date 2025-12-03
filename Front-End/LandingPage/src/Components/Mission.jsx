@@ -29,7 +29,7 @@ const Mission =({onOpenRegister})=> {
               <h2 className="mt-2 text-3xl md:text-4xl font-bold text-gray-900">
                 Turning space-driven insights into healthier fields, empowered farmers, and a resilient Sri Lankan future.            </h2>
               <p className="mt-4 text-gray-700">
-                RiceVision's mission is to revolutionize rice cultivation and national food planning in Sri Lanka by delivering an 
+                RiceVision's mission is to revolutionise rice cultivation and national food planning in Sri Lanka by delivering an 
                 integrated, satellite-powered decision-support system. By fusing optical and radar imagery with machine learning models,
                  the platform provides continuous field monitoring, early warnings for drought, pests, and disease, and district-level 
                  yield forecasts. This enables farmers to protect their crops, policymakers to make evidence-based import decisions, and
