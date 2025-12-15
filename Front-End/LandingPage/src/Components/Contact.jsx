@@ -37,12 +37,7 @@ function Contact() {
               className="border border-gray-200 rounded-lg px-4 py-3 w-full placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-green-200"
             ></textarea>
 
-            <div className="flex items-center gap-3">
-              <input type="checkbox" className="w-4 h-4 border-gray-300" />
-              <p className="text-sm text-gray-700">
-                You agree to our <span className="font-semibold">Privacy Policy.</span>
-              </p>
-            </div>
+
 
             <button
               type="button"
@@ -59,9 +54,7 @@ function Contact() {
             Get In <span className="text-green-600"> Touch</span>
           </h2>
           <p className="text-gray-600 leading-relaxed mb-10 max-w-md">
-            You need more information? Check what other persons are saying about our product.
-            They are very happy with their purchase.
-          </p>
+Need help? Get in touch with us.          </p>
 
           <div className="space-y-6">
             <div className="flex items-center gap-4">
@@ -84,15 +77,6 @@ function Contact() {
               </div>
             </div>
 
-            <div className="flex items-center gap-4">
-              <div className="bg-black text-white rounded-full p-3">
-                <Ticket className="w-4 h-4" />
-              </div>
-              <div>
-                <div className="text-sm text-gray-500">Support</div>
-                <div className="font-semibold text-gray-900">Open Support Ticket</div>
-              </div>
-            </div>
           </div>
         </div>
 
