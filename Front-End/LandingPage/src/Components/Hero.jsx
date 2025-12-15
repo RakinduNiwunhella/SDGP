@@ -30,12 +30,12 @@ const Hero = () => {
               <p className="mt-4 text-center text-slate-600">Real-time satellite insights supporting sustainable farming.</p>
 
               <div className="mt-8 flex justify-center">
-                <a href="#" className="px-8 py-3 bg-green-700 text-white font-semibold rounded-md shadow focus:outline-none focus:ring-2 focus:ring-green-400">LEARN MORE</a>
+                <a href="#info" className="px-8 py-3 bg-green-700 text-white font-semibold rounded-md shadow focus:outline-none focus:ring-2 focus:ring-green-400">LEARN MORE</a>
               </div>
 
               <div className="mt-8 border-t pt-4 flex items-center justify-center gap-3">
                 <span className="material-icons text-slate-700 text-[20px]">explore</span>
-                <a href="#" className="text-sm font-semibold text-slate-700">Explore what we do</a>
+                <a href="#features" className="text-sm font-semibold text-slate-700">Explore what we do</a>
               </div>
             </div>
           </div>

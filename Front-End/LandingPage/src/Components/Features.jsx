@@ -9,7 +9,7 @@ export default function Features() {
       img: "/mnt/data/7fc48c69-f59e-4d08-8b5b-1a3b11c6bb75.png",
     },
     {
-      title: "Interactive Visualization",
+      title: "Interactive Visualisation",
       description:
         "Dynamic maps showing paddy land distribution with zoom capabilities, layer controls, and real-time updates for accurate field monitoring.",
       img: "/mnt/data/7fc48c69-f59e-4d08-8b5b-1a3b11c6bb75.png",
@@ -55,9 +55,7 @@ export default function Features() {
                 {feature.title}
               </h3>
               <p className="text-gray-600 mb-4">{feature.description}</p>
-              <button className="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition">
-                View Details
-              </button>
+
             </div>
           </div>
         ))}

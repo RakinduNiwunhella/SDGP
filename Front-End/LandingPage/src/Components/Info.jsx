@@ -3,19 +3,19 @@ import Reveal from "./Reveal";
 
 function Info() {
   return (
-    <section id="overview">
+    <section id="info">
     <div className="w-full bg-white py-20 px-8 md:px-20">
       <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-16">
         {/* LEFT SECTION */}
         <Reveal>
-        <div className="flex flex-col justify-center">
+        <div className="flex flex-col justify-center h-full">
           <h2 className="text-4xl md:text-5xl font-bold leading-tight text-gray-900">
-           Stepping Up Agricultural  <br /> Intelligence in Sri Lanka
+           Stepping Up Agricultural  <br/> Intelligence in Sri Lanka
           </h2>
 
-          <p className="mt-6 text-lg text-gray-700 leading-relaxed">
-            Alongside farmers, government agencies and researchers, we are transforming how Sri Lanka monitors paddy fields—reducing crop losses, 
-            strengthening food security, and supporting smarter decisions through satellite-powered insights.
+          <p className="mt-6 text-lg text-gray-700 leading-relaxed text-justify">
+            Alongside farmers, government agencies and researchers, we are transforming how Sri Lanka monitors paddy fields reducing crop losses, 
+            strengthening food security, and supporting smarter decisions through satellite powered insights.
           </p>
         </div>
         </Reveal>
@@ -30,7 +30,8 @@ function Info() {
               Who We Are <span className="text-green-700">&gt;</span>
             </h3>
             <p className="text-gray-700 mt-3">
-                We’re a team building Sri Lanka’s first satellite-based rice monitoring and early-warning platform using Earth Observation, machine learning, and field data.            </p>
+            We are building Sri Lanka's first satellite-based rice monitoring and yield prediction system using
+             Earth Observation, machine learning, and field data.</p>
           </div>
           </Reveal>
 
@@ -41,7 +42,9 @@ function Info() {
               What We Do <span className="text-green-700">&gt;</span>
             </h3>
             <p className="text-gray-700 mt-3">
-             We use Sentinel-1, Sentinel-2, and AI models to track paddy health, growth stages, water stress, and yield, giving near–real-time insights to reduce losses and support food-security planning.
+             We use Sentinel-1, Sentinel-2, and AI to track paddy health, growth stages, water stress, and yield
+              in near real time. These insights help reduce losses, guide inputs, and support national food security
+               planning.
             </p>
           </div>
           </Reveal>
@@ -53,8 +56,8 @@ function Info() {
               How To Help <span className="text-green-700">&gt;</span>
             </h3>
             <p className="text-gray-700 mt-3">
- Partner with us to advance digital agriculture. Share field data, join pilot tests, or integrate our platform to help farmers make faster decisions and reduce Sri Lanka’s reliance on rice imports.
-            </p>
+            Partner with us to advance digital agriculture across Sri Lanka. Share field data, join pilots, or integrate
+             our platform to help farmers make faster decisions and cut rice import dependence.</p>
           </div>
           </Reveal>
 
@@ -65,7 +68,7 @@ function Info() {
               Where We Work <span className="text-green-700">&gt;</span>
             </h3>
             <p className="text-gray-700 mt-3">
-             Our system covers major paddy-growing districts across both Yala and Maha seasons, using cloud-penetrating radar for reliable, year-round monitoring—even during heavy monsoons.
+             Our system spans major paddy-growing districts in both Yala and Maha seasons. Cloud-penetrating radar enables reliable, year round monitoring, even during heavy monsoons.
             </p>
           </div>
           </Reveal>
