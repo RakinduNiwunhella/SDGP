@@ -42,14 +42,14 @@ const goals = [
 
 export default function Goals() {
   return (
-    <section id="goal" className="py-16 bg-gray-50">
+    <section id="goal" className="py-16 bg-gray-50 dark:bg-gray-800">
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
 
-        <h2 className="text-5xl font-extrabold text-gray-900 leading-tight">
+        <h2 className="text-5xl font-extrabold text-gray-900 leading-tight dark:text-white">
           Our Goals for <span className="block">2030</span>
         </h2>
 
-        <p className="mt-6 text-lg text-gray-600 max-w-2xl">
+        <p className="mt-6 text-lg text-gray-600 max-w-2xl dark:text-gray-300">
           Our mission is to transform Sri Lanka's rice farming with accurate, satellite-powered insights. 
           By combining remote sensing and machine learning, we help farmers make smarter, faster, and more resilient decisions.
         </p>
