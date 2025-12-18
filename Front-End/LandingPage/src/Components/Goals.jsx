@@ -42,14 +42,14 @@ const goals = [
 
 export default function Goals() {
   return (
-    <section id="goal" className="py-16 bg-gray-50 dark:bg-gray-800">
+    <section id="goal" className="py-16 bg-gray-50 dark:bg-gray-900">
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
 
         <h2 className="text-5xl font-extrabold text-gray-900 leading-tight dark:text-white">
-          Our Goals for <span className="block">2030</span>
+          Our Goals for <span className="block text-green-800 dark:text-green-400">2030</span>
         </h2>
 
-        <p className="mt-6 text-lg text-gray-600 max-w-2xl dark:text-gray-300">
+        <p className="mt-6 text-lg text-gray-600 max-w-2xl dark:text-gray-200">
           Our mission is to transform Sri Lanka's rice farming with accurate, satellite-powered insights. 
           By combining remote sensing and machine learning, we help farmers make smarter, faster, and more resilient decisions.
         </p>
@@ -60,17 +60,17 @@ export default function Goals() {
           {goals.map((g) => (
             <div
               key={g.id}
-              className="bg-white p-6 rounded-2xl shadow-sm hover:shadow-md transition flex gap-6"
+              className="bg-white p-6 rounded-2xl shadow-sm hover:shadow-md transition flex gap-6 dark:bg-black"
             >
               <div className=" h-16 w-16 flex items-center justify-center">
-                <span className="material-symbols-outlined text-3xl text-green-700">
+                <span className="material-symbols-outlined text-3xl text-green-400">
                   {g.icon}
                 </span>
               </div>
 
               <div>
-                <div className="text-2xl font-bold text-gray-900">{g.id}</div>
-                <p className="mt-2 text-sm text-gray-600">{g.desc}</p>
+                <div className="text-2xl font-bold text-gray-900 dark:text-white">{g.id}</div>
+                <p className="mt-2 text-sm text-gray-600 dark:text-gray-400">{g.desc}</p>
               </div>
             </div>
           ))}
