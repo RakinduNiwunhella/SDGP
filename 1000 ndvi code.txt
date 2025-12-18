@@ -1,89 +1,108 @@
-// =============================================
-// RICE HEALTH MONITORING DATASET (Sentinel-1 + Sentinel-2)
-// =============================================
+// =======================================================
+// RiceVision — Sentinel-2 Monthly Sampling
+// 1 export per year (2022–2025), Memory-safe
+// =======================================================
 
-// 1. Define AOI
+// 1. Load simplified paddy polygons
+var paddy = ee.FeatureCollection(
+  'projects/ricevision/assets/Ampara_paddy_simplified'
+);
 
-Map.centerObject(aoi, 14);
-Map.addLayer(aoi, {color: 'red'}, 'AOI');
+var aoi = paddy.geometry();
+print('Paddy feature count:', paddy.size());
 
-// 2. Sentinel-2 Surface Reflectance
-var s2 = ee.ImageCollection('COPERNICUS/S2_SR')
+// 2. Sentinel-2 base collection
+var s2base = ee.ImageCollection('COPERNICUS/S2_SR_HARMONIZED')
   .filterBounds(aoi)
-  .filterDate('2021-01-01', '2025-12-31')
-  .filter(ee.Filter.lt('CLOUDY_PIXEL_PERCENTAGE', 50))
-  .select(['B1','B2','B3','B4','B5','B6','B7','B8','B8A','B9','B11','B12','SCL']);
+  .filter(ee.Filter.lt('CLOUDY_PIXEL_PERCENTAGE', 40))
+  .select([
+    'B1','B2','B3','B4','B5','B6','B7',
+    'B8','B8A','B9','B11','B12','SCL'
+  ]);
 
-function maskSCL(img) {
-  var scl = img.select('SCL');
-  var mask = scl.neq(3).and(scl.neq(8)).and(scl.neq(9))
-                .and(scl.neq(10)).and(scl.neq(11));
-  return img.updateMask(mask);
-}
-s2 = s2.map(maskSCL);
-
-// 3. Sentinel-1 GRD (VV, VH)
-var s1 = ee.ImageCollection('COPERNICUS/S1_GRD')
-  .filterBounds(aoi)
-  .filterDate('2021-01-01', '2025-12-31')
-  .filter(ee.Filter.eq('instrumentMode', 'IW'))
-  .filter(ee.Filter.listContains('transmitterReceiverPolarisation', 'VV'))
-  .filter(ee.Filter.listContains('transmitterReceiverPolarisation', 'VH'))
-  .select(['VV','VH'])
-  .map(function(img) {
-    var vv_lin = ee.Image(10).pow(img.select('VV').divide(10)).rename('VV_lin');
-    var vh_lin = ee.Image(10).pow(img.select('VH').divide(10)).rename('VH_lin');
-    return img.addBands([vv_lin, vh_lin]).clip(aoi);
-  });
-
-// 4. Merge Sentinel-1 + Sentinel-2 safely
-function mergeCollections(s2img) {
-  var s2date = ee.Date(s2img.get('system:time_start'));
-  var s1match = s1.filterDate(s2date.advance(-3, 'day'), s2date.advance(3, 'day')).median();
-
-  // Create blank masked bands if no Sentinel-1 data found
-  var empty = ee.Image(0).rename('VV_lin').addBands(ee.Image(0).rename('VH_lin'))
-                .updateMask(ee.Image(0)); // fully masked
-
-  var condition = s1match.bandNames().size().gt(0);
-  var safeS1 = ee.Image(ee.Algorithms.If(condition,
-                                         s1match.select(['VV_lin', 'VH_lin']),
-                                         empty));
-  return s2img.addBands(safeS1);
-}
-var combined = s2.map(mergeCollections);
-
-// 5. Random sample points
-var points = ee.FeatureCollection.randomPoints({
-  region: aoi,
-  points: 1000,
-  seed: 42
-}).map(function(f){
-  var c = f.geometry().coordinates();
-  return f.set({'longitude': c.get(0), 'latitude': c.get(1)});
-});
-
-// 6. Sample combined data
-var sampled = combined.map(function(img){
-  var vals = img.sampleRegions({
-    collection: points,
-    scale: 10,
-    geometries: false
-  });
-  return vals.map(function(f){
-    return f.set({
-      'Date': ee.Date(img.get('system:time_start')).format('YYYY-MM-dd'),
-      'Satellite': 'Sentinel-1/2',
-      'CloudyPixelPercent': img.get('CLOUDY_PIXEL_PERCENTAGE'),
-      'longitude': f.get('longitude'),
-      'latitude': f.get('latitude')
-    });
+// 3. Create sampling points ONCE (flattened)
+var points = paddy.map(function(f){
+  return ee.FeatureCollection.randomPoints({
+    region: f.geometry(),
+    points: 2,  // reduce if memory issues
+    seed: 42
   });
 }).flatten();
 
-// 7. Export to Drive
-Export.table.toDrive({
-  collection: sampled,
-  description: 'Sentinel1_2_Rice_Bands_With_VV_VH_Final',
-  fileFormat: 'CSV'
+// Add longitude/latitude
+points = points.map(function(f){
+  var c = f.geometry().coordinates();
+  return f.set({
+    longitude: c.get(0),
+    latitude: c.get(1)
+  });
+});
+
+print('Sampling points:', points.size());
+
+// 4. Years and months
+var years = [2022, 2023, 2024, 2025];
+var months = ee.List.sequence(1,12);
+
+// 5. Process each year separately
+years.forEach(function(YEAR){
+
+  // Map months and collect sampled features
+  var monthlySamplesList = months.map(function(MONTH){
+
+    var monthStart = ee.Date.fromYMD(YEAR, MONTH, 1);
+    var monthEnd = monthStart.advance(1,'month');
+
+    var s2 = s2base.filterDate(monthStart, monthEnd);
+
+    var img = ee.Image(
+      ee.Algorithms.If(
+        s2.size().gt(0),
+        s2.median(),
+        ee.Image(0).updateMask(ee.Image(0))
+      )
+    );
+
+    // Add Date as band
+    img = img.addBands(
+      ee.Image.constant(monthStart.millis())
+        .rename('Date')
+        .toInt64()
+    );
+
+    // Sample using the flat points collection
+    var samples = img.sampleRegions({
+      collection: points,
+      scale: 30,
+      geometries: true
+    });
+
+    // Add readable date
+    return samples.map(function(f){
+      return f.set({
+        Date: monthStart.format('YYYY-MM-dd'),
+        Satellite: 'Sentinel-2'
+      });
+    });
+
+  });
+
+  // Flatten all months into a single FeatureCollection
+  var yearlySamples = ee.FeatureCollection(monthlySamplesList).flatten();
+
+  // Select final output columns
+  yearlySamples = yearlySamples.select([
+    'B1','B11','B12','B2','B3','B4','B5','B6','B7',
+    'B8','B8A','B9',
+    'SCL','Date','Satellite',
+    'latitude','longitude'
+  ]);
+
+  // Export CSV for this year
+  Export.table.toDrive({
+    collection: yearlySamples,
+    description: 'RiceVision_S2_Monthly_' + YEAR,
+    fileFormat: 'CSV'
+  });
+
 });
