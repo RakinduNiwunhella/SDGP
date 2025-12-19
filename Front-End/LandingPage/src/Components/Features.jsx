@@ -29,12 +29,12 @@ export default function Features() {
   ];
 
   return (
-    <section id="features" className="py-20 bg-gray-50">
+    <section id="features" className="py-20 bg-gray-50 dark:bg-gray-900">
       <div className="max-w-6xl mx-auto text-center mb-12">
-        <h2 className="text-4xl font-bold text-gray-800 mb-2">
+        <h2 className="text-4xl font-bold text-gray-800 mb-2 dark:text-white">
           What <span className="text-green-600">We</span> Provide
         </h2>
-        <p className="text-gray-600">
+        <p className="text-gray-600 dark:text-gray-300">
           Comprehensive solutions for modern agriculture
         </p>
       </div>
@@ -43,7 +43,7 @@ export default function Features() {
         {features.map((feature, index) => (
           <div
             key={index}
-            className="bg-white shadow-lg rounded-2xl overflow-hidden hover:shadow-xl transition-shadow"
+            className="bg-white shadow-lg rounded-2xl overflow-hidden hover:shadow-xl transition-shadow dark:bg-black"
           >
             <img
               src={feature.img}
@@ -51,10 +51,10 @@ export default function Features() {
               className="w-full h-56 object-cover"
             />
             <div className="p-6">
-              <h3 className="text-xl font-semibold text-gray-800 mb-2">
+              <h3 className="text-xl font-semibold text-gray-800 mb-2 dark:text-white">
                 {feature.title}
               </h3>
-              <p className="text-gray-600 mb-4">{feature.description}</p>
+              <p className="text-gray-600 mb-4 dark:text-gray-300">{feature.description}</p>
 
             </div>
           </div>
