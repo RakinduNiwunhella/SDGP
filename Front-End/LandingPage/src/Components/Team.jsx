@@ -54,14 +54,14 @@ function Team() {
   ];
 
   return (
-    <div className="py-16 bg-white">
+    <div className="py-16 bg-white dark:bg-gray-900">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         {/* Title */}
         <div className="mx-auto max-w-2xl text-center">
-          <h2 className="text-3xl font-bold tracking-tight text-gray-900">
+          <h2 className="text-3xl font-bold tracking-tight text-gray-900 dark:text-white">
             Our team
           </h2>
-          <p className="mt-4 text-lg leading-8 text-gray-600">
+          <p className="mt-4 text-lg leading-8 text-gray-600 dark:text-gray-300">
             We’re a dynamic group of individuals who are passionate about what we
             do and dedicated to delivering the best results for our clients.
           </p>
@@ -72,17 +72,17 @@ function Team() {
           {people.map((person) => (
             <div
               key={person.name}
-              className="text-center transform transition-all duration-300 ease-in hover:scale-105 hover:shadow-xl rounded-lg overflow-hidden bg-white p-4"
+              className="text-center transform transition-all duration-300 ease-in hover:scale-105 hover:shadow-xl rounded-lg overflow-hidden bg-white p-4 dark:bg-gray-950"
             >
               <img
                 className="mx-auto h-85 w-95 object-cover rounded-lg"
                 src={person.imageUrl}
                 alt={person.name}
               />
-              <h3 className="mt-6 text-lg font-semibold text-gray-900 ">
+              <h3 className="mt-6 text-lg font-semibold text-gray-900 dark:text-white">
                 {person.name}
               </h3>
-              <p className="text-sm text-gray-600">{person.role}</p>
+              <p className="text-sm text-gray-600 dark:text-gray-300">{person.role}</p>
 
               {/* Icons */}
               <div className="mt-4 flex items-center justify-center gap-x-4">
@@ -91,7 +91,7 @@ function Team() {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label={`${person.name} GitHub`}
-                  className="text-gray-400 hover:text-gray-600"
+                  className="text-gray-400 hover:text-green-600 dark:text-white dark:hover:text-green-500"
                 >
                     <FaGithub className="w-6 h-6" />
                 </a>
@@ -100,7 +100,7 @@ function Team() {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label={`${person.name} LinkedIn`}
-                  className="text-gray-400 hover:text-gray-600"
+                  className="text-gray-400 hover:text-blue-600 dark:text-white dark:hover:text-blue-500"
                 >
                     <FaLinkedin className="w-6 h-6" />
                 </a>
