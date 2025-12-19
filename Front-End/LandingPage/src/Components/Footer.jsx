@@ -44,11 +44,11 @@ export default function Footer() {
         <div>
           <h3 className="font-bold text-gray-900 dark:text-white mb-4 text-lg">Site Map</h3>
           <ul className="space-y-2 text-gray-700 dark:text-gray-300">
-            <li><a href="/" className="hover:text-green-600 dark:hover:text-green-400 transition">Homepage</a></li>
-            <li><a href="/Mission" className="hover:text-green-600 dark:hover:text-green-400 transition">Mission</a></li>
-            <li><a href="/Goal" className="hover:text-green-600 dark:hover:text-green-400 transition">Goal</a></li>
-            <li><a href="/Features" className="hover:text-green-600 dark:hover:text-green-400 transition">Features</a></li>
-            <li><a href="/contact-us" className="hover:text-green-600 dark:hover:text-green-400 transition">Contact Us</a></li>
+            <li><a href="#info" className="hover:text-green-600 dark:hover:text-green-400 transition">Homepage</a></li>
+            <li><a href="#mission" className="hover:text-green-600 dark:hover:text-green-400 transition">Mission</a></li>
+            <li><a href="#goal" className="hover:text-green-600 dark:hover:text-green-400 transition">Goal</a></li>
+            <li><a href="#features" className="hover:text-green-600 dark:hover:text-green-400 transition">Features</a></li>
+            <li><a href="#contact" className="hover:text-green-600 dark:hover:text-green-400 transition">Contact Us</a></li>
           </ul>
         </div>
 
