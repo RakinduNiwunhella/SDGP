@@ -7,7 +7,7 @@ function Team() {
       name: "Rakindu Niwunhella",
       role: "Front-end Developer",
       imageUrl:
-        "public/images/rakindu.png",
+        "/images/rakindu.webp",
       github: "https://github.com/RakinduNiwunhella",
       linkedin: "https://www.linkedin.com/in/rakindu-niwunhella-388b41307?lipi=urn%3Ali%3Apage%3Ad_flagship3_profile_view_base_contact_details%3Bngmhzz0WS%2FCdnSjZnlmA%2Fg%3D%3D"
     },
@@ -15,7 +15,7 @@ function Team() {
       name: "Sanila Wijesekara",
       role: "AI and backend engineer",
       imageUrl:
-        "public/images/sanila.jpg",
+        "/images/sanila.webp",
       github: "https://github.com/Sanila-577",
       linkedin: "https://www.linkedin.com/in/sanila-wijesekara"
     },
@@ -23,7 +23,7 @@ function Team() {
       name: "Chethina Fernando",
       role: "Database architect",
       imageUrl:
-        "public/images/chethina.png",
+        "/images/chethina.webp",
       github: "https://github.com/Chethi2003",
       linkedin: "https://www.linkedin.com/in/fernandochethina2003?lipi=urn%3Ali%3Apage%3Ad_flagship3_profile_view_base_contact_details%3B7O6IhD1nTBKlh46cnMe3mw%3D%3D"
     },
@@ -31,7 +31,7 @@ function Team() {
       name: "Binada Matara Arachchige",
       role: "AI and backend engineer",
       imageUrl:
-        "public/images/binada.png",
+        "/images/binada.webp",
       github: "https://github.com/binadacode",
       linkedin: "https://www.linkedin.com/in/binada-matara-arachchige-078b30226?lipi=urn%3Ali%3Apage%3Ad_flagship3_profile_view_base_contact_details%3BsBhP2K9MSS2XuyZ7XN3f4w%3D%3D"
     },
@@ -39,7 +39,7 @@ function Team() {
       name: "Pavithma Fernando",
       role: "UI/UX designer",
       imageUrl:
-        "public/images/pavithma.jpg",
+        "/images/pavithma.webp",
       github: "https://github.com/pavithma",
       linkedin: "https://www.linkedin.com/in/pavithma-fernando-1a8468324?lipi=urn%3Ali%3Apage%3Ad_flagship3_profile_view_base_contact_details%3BSS8l6wDyQZil2h3pj7AO0Q%3D%3D"
     },
@@ -47,7 +47,7 @@ function Team() {
       name: "Sithuli Basnayake",
       role: "UI/UX designer",
       imageUrl:
-        "public/images/sithuli.png",
+        "/images/sithuli.webp",
       github: "https://github.com/basnayake4",
       linkedin: "https://www.linkedin.com/in/sithuli-basnayake-42101022a?lipi=urn%3Ali%3Apage%3Ad_flagship3_profile_view_base_contact_details%3BEw7JM8gITt2SJLYJUcagMQ%3D%3D"
     },

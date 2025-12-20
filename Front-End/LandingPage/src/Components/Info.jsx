@@ -67,7 +67,7 @@ function Info() {
             <h3 className="text-xl dark:text-green-400 font-bold text-green-800 flex items-center gap-1">
               Where We Work <span className="text-green-700">&gt;</span>
             </h3>
-            <p className="text-gray-700 dark: text-slate-300 mt-3">
+            <p className="text-gray-700 dark: mt-3">
              Our system spans major paddy-growing districts in both Yala and Maha seasons. Cloud-penetrating radar enables reliable, year round monitoring, even during heavy monsoons.
             </p>
           </div>

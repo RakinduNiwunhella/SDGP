@@ -16,7 +16,7 @@ const Hero = () => {
             className="absolute inset-0 w-full h-full object-cover -z-10"
             src={bgVideo}
             >
-            <source src={bgVideo} type="video/mp4" />
+            <source src={bgVideo} type="video/webm" />
             </video>
         {/* small info button at bottom-left of the hero */}
 
