@@ -16,12 +16,12 @@ function Contact() {
               <input
                 type="text"
                 placeholder="First Name"
-                className="border border-gray-200 rounded-lg px-4 py-3 w-full placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-green-200 dark:bg-black dark:border-gray-700 dark:placeholder-gray-500"
+                className="border border-gray-200 rounded-lg px-4 py-3 w-full placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-green-200 dark:bg-black dark:border-gray-700 dark:placeholder-gray-500 dark:text-white"
               />
               <input
                 type="text"
                 placeholder="Last Name"
-                className="border border-gray-200 rounded-lg px-4 py-3 w-full placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-green-200 dark:bg-black dark:border-gray-700 dark:placeholder-gray-500"
+                className="border dark:text-white border-gray-200 rounded-lg px-4 py-3 w-full placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-green-200 dark:bg-black dark:border-gray-700 dark:placeholder-gray-500"
               />
             </div>
 
@@ -34,14 +34,14 @@ function Contact() {
             <textarea
               placeholder="Message"
               rows="6"
-              className="border border-gray-200 rounded-lg px-4 py-3 w-full placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-green-200 dark:bg-black dark:border-gray-700 dark:placeholder-gray-500"
+              className="border dark:text-white border-gray-200 rounded-lg px-4 py-3 w-full placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-green-200 dark:bg-black dark:border-gray-700 dark:placeholder-gray-500"
             ></textarea>
 
 
 
             <button
               type="button"
-              className="w-full bg-black text-white py-3 rounded-lg text-sm font-semibold hover:bg-gray-900 transition dark:bg-gray-600 dark:hover:bg-green-500"
+              className="w-full dark:text-white bg-black text-white py-3 rounded-lg text-sm font-semibold hover:bg-gray-900 transition dark:bg-gray-600 dark:hover:bg-green-500"
             >
               SEND MESSAGE
             </button>
