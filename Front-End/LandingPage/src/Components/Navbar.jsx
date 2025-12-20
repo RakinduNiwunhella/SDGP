@@ -1,4 +1,6 @@
 import React, { useState } from 'react'
+import logo from '/images/Logo-RiceVision.webp'
+
 
 const Navbar = ({ onOpenRegister }) => {
   const [menuOpen, setMenuOpen] = useState(false)
@@ -6,11 +8,15 @@ const Navbar = ({ onOpenRegister }) => {
   const handleLinkClick = () => setMenuOpen(false)
 
   return (
-    <nav className="sticky top-0 z-50 relative w-full flex items-center justify-between px-4 md:px-10 py-2 shadow-sm bg-white dark:bg-slate-900 text-slate-900 dark:text-white">
+    <nav className="sticky top-0 z-50 w-full flex items-center justify-between px-4 md:px-10 py-2 shadow-sm bg-white dark:bg-slate-900 text-slate-900 dark:text-white">
 
       <div className="flex items-center gap-2">
-        <img src="src/assets/Logo-RiceVision.png" className='w-auto h-10 md:h-12' alt="RiceVision logo" />
-      </div>
+
+<img
+  src={logo}
+  className="w-auto h-10 md:h-12"
+  alt="RiceVision logo"
+/>      </div>
 
       {/* Desktop links */}
       <div className="hidden md:flex items-center gap-10 text-sm font-semibold">
