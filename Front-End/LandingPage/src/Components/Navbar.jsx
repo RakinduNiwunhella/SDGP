@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 import logo from '/images/Logo-RiceVision.webp'
 
-
 const Navbar = ({ onOpenRegister }) => {
   const [menuOpen, setMenuOpen] = useState(false)
 
@@ -37,7 +36,7 @@ const Navbar = ({ onOpenRegister }) => {
           onClick={() => { setMenuOpen(false); onOpenRegister?.() }}
           className="hidden md:inline bg-green-700 dark:bg-green-600 text-white px-6 py-2 font-semibold rounded-md hover:bg-green-800 dark:hover:bg-green-700"
         >
-          Register
+          Get Started
         </button>
 
         {/* Mobile menu button */}
@@ -72,7 +71,7 @@ const Navbar = ({ onOpenRegister }) => {
             onClick={() => { setMenuOpen(false); onOpenRegister?.() }}
             className="bg-green-700 dark:bg-green-600 text-white px-6 py-2 font-semibold rounded-md hover:bg-green-800 dark:hover:bg-green-700"
           >
-            Register
+          Get Started
           </button>
         </div>
       </div>
