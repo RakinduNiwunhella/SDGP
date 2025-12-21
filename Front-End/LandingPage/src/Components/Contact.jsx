@@ -4,7 +4,7 @@ import { Mail, Phone, Ticket } from "lucide-react";
 function Contact() {
   return (
     <section id="contact">
-    <div className="w-full bg-gray-50 py-20 px-6 md:px-12 dark:bg-gray-900">
+    <div className="w-full bg-gray-50 pt-20 pb-10 px-6 md:px-12 dark:bg-gray-900">
       <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-20 items-start">
 
         {/* LEFT SIDE FORM */}
