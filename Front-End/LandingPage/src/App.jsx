@@ -29,11 +29,12 @@ function App() {
       <Route
         path="/"
         element={
-          <div className="min-h-screen flex flex-col">
+          <div className="min-h-screen flex flex-col overflow-x-hidden">
+            {/* NAVBAR */}
             <Navbar onOpenRegister={() => setAuthOpen(true)} />
 
             {/* MAIN CONTENT */}
-            <main className="flex-1">
+            <main className="flex-1 w-full overflow-x-hidden">
               <Hero />
               <Info />
               <Mission onOpenRegister={() => setAuthOpen(true)} />
@@ -43,8 +44,10 @@ function App() {
               <Contact />
             </main>
 
+            {/* FOOTER */}
             <Footer />
 
+            {/* AUTH MODAL */}
             <AuthModal
               isOpen={authOpen}
               onClose={() => setAuthOpen(false)}
@@ -54,7 +57,14 @@ function App() {
       />
 
       {/* BUILDING PAGE — NO NAVBAR, NO FOOTER */}
-      <Route path="/building" element={<Building />} />
+      <Route
+        path="/building"
+        element={
+          <div className="min-h-screen w-full overflow-x-hidden">
+            <Building />
+          </div>
+        }
+      />
     </Routes>
   );
 }
