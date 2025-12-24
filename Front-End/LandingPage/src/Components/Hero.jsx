@@ -21,9 +21,9 @@ const Hero = () => {
         {/* small info button at bottom-left of the hero */}
 
 
-        {/* floating card on the right for md+; stacks on small screens */}
-        <div className="absolute inset-0 flex items-center justify-end pointer-events-none">
-          <div className="w-full max-w-2xl md:max-w-lg lg:max-w-xl mr-6 md:mr-12 lg:mr-20 transform translate-y-4 pointer-events-auto">
+        {/* floating card centered on mobile; right-aligned on md+ */}
+        <div className="absolute inset-0 flex items-center justify-center md:justify-end pointer-events-none">
+          <div className="w-full max-w-2xl px-4 md:px-0 md:max-w-lg lg:max-w-xl md:mr-6 lg:mr-20 transform translate-y-4 pointer-events-auto">
             <div className="bg-white dark:bg-slate-800 rounded-xl shadow-2xl p-8 md:p-12">
               <h1 className="text-3xl md:text-4xl font-extrabold leading-tight text-center dark:text-white">Protect Sri Lanka's Paddy 
 <br className="hidden md:block" />Fields</h1>
