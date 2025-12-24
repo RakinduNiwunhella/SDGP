@@ -18,24 +18,34 @@ function Contact() {
     }));
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      const { data, error } = await supabase
-        .from("contacts")
-        .insert([formData]);
-      if (error) throw error;
-      alert("Message sent successfully!");
-      setFormData({
-        firstName: "",
-        lastName: "",
-        phone: "",
-        message: ""
-      });
-    } catch (error) {
-      alert("Error sending message.");
-    }
-  };
+const handleSubmit = async (e) => {
+  e.preventDefault();
+  try {
+    const { error } = await supabase
+      .from("contact_messages")
+      .insert([
+        {
+          first_name: formData.firstName,
+          last_name: formData.lastName,
+          phone: formData.phone,
+          message: formData.message,
+        },
+      ]);
+
+    if (error) throw error;
+
+    alert("Message sent successfully!");
+    setFormData({
+      firstName: "",
+      lastName: "",
+      phone: "",
+      message: "",
+    });
+  } catch (error) {
+    alert("Error sending message.");
+  }
+};
+
 
   return (
     <section id="contact">
