@@ -1,113 +1,61 @@
-import React, { useState, useEffect } from 'react';
-import Navbar from './Components/Navbar';
-import Hero from './Components/Hero';
-import Info from './Components/Info';
-import Mission from './Components/Mission';
-import Goals from './Components/Goals';
-import Features from './Components/Features';
-import Contact from './Components/Contact';
-import Register from './Components/Register';
-import Footer from './Components/Footer';
-import SplashScreen from './Components/SplashScreen';
-import Team from './Components/Team';
+import { Routes, Route } from "react-router-dom";
+import { useState } from "react";
+
+import Navbar from "./Components/Navbar";
+import Hero from "./Components/Hero";
+import Info from "./Components/Info";
+import Mission from "./Components/Mission";
+import Goals from "./Components/Goals";
+import Features from "./Components/Features";
+import Contact from "./Components/Contact";
+import Footer from "./Components/Footer";
+import AuthModal from "./Components/AuthModal";
+import SplashScreen from "./Components/SplashScreen";
+import Team from "./Components/Team";
+import Building from "./Components/Building";
 
 function App() {
-  // Splash screen state
   const [loading, setLoading] = useState(true);
+  const [authOpen, setAuthOpen] = useState(false);
 
-  // Modal state
-  const [openRegister, setOpenRegister] = useState(false);
-  const [mountedModal, setMountedModal] = useState(false);
-
-  // Modal entrance animation
-  useEffect(() => {
-    if (!openRegister) return;
-    const t = setTimeout(() => setMountedModal(true), 20);
-    return () => {
-      clearTimeout(t);
-      setMountedModal(false);
-    };
-  }, [openRegister]);
-
-  // Scroll lock when modal is open
-  useEffect(() => {
-    let scrollY = 0;
-    const prevPaddingRight = document.body.style.paddingRight || '';
-
-    if (openRegister) {
-      scrollY = window.scrollY || window.pageYOffset;
-      const scrollbarWidth = window.innerWidth - document.documentElement.clientWidth;
-      if (scrollbarWidth > 0) {
-        document.body.style.paddingRight = `${scrollbarWidth}px`;
-      }
-      document.body.style.position = 'fixed';
-      document.body.style.top = `-${scrollY}px`;
-      document.body.style.left = '0';
-      document.body.style.right = '0';
-    }
-
-    return () => {
-      document.body.style.position = '';
-      document.body.style.top = '';
-      document.body.style.left = '';
-      document.body.style.right = '';
-      document.body.style.paddingRight = prevPaddingRight;
-
-      if (openRegister) {
-        window.scrollTo(0, scrollY);
-      }
-    };
-  }, [openRegister]);
+  // Splash screen
+  if (loading) {
+    return <SplashScreen onFinish={() => setLoading(false)} />;
+  }
 
   return (
-    <>
-      {/* SPLASH SCREEN */}
-      {loading && <SplashScreen onFinish={() => setLoading(false)} />}
+    <Routes>
+      {/* HOME PAGE — WITH NAVBAR & FOOTER */}
+      <Route
+        path="/"
+        element={
+          <div className="min-h-screen flex flex-col">
+            <Navbar onOpenRegister={() => setAuthOpen(true)} />
 
-      {/* MAIN APP */}
-      {!loading && (
-        <>
-          <Navbar onOpenRegister={() => setOpenRegister(true)} />
+            {/* MAIN CONTENT */}
+            <main className="flex-1">
+              <Hero />
+              <Info />
+              <Mission onOpenRegister={() => setAuthOpen(true)} />
+              <Goals />
+              <Features />
+              <Team />
+              <Contact />
+            </main>
 
-          <Hero />
-          <Info />
-          <Mission onOpenRegister={() => setOpenRegister(true)}/>
-          <Goals />
-          <Features />
-          <Team/>
-          <Contact />
-          <Footer />
+            <Footer />
 
-          {/* MODAL */}
-          {openRegister && (
-            <div
-              className="fixed inset-0 bg-black/50 flex items-center justify-center z-50"
-              onClick={() => setOpenRegister(false)}
-              style={{ opacity: mountedModal ? 1 : 0, transition: 'opacity 200ms ease-out' }}
-            >
-              <div
-                className="bg-white rounded-lg shadow-xl w-full max-w-lg p-6 relative"
-                onClick={(e) => e.stopPropagation()}
-                style={{
-                  opacity: mountedModal ? 1 : 0,
-                  transform: mountedModal ? 'translateY(0) scale(1)' : 'translateY(12px) scale(0.98)',
-                  transition: 'opacity 200ms ease-out, transform 200ms ease-out',
-                }}
-              >
-                <button
-                  onClick={() => setOpenRegister(false)}
-                  className="absolute top-3 right-3 text-gray-600 hover:text-black text-xl"
-                >
-                  ✕
-                </button>
+            <AuthModal
+              isOpen={authOpen}
+              onClose={() => setAuthOpen(false)}
+            />
+          </div>
+        }
+      />
 
-                <Register />
-              </div>
-            </div>
-          )}
-        </>
-      )}
-    </>
+      {/* BUILDING PAGE — NO NAVBAR, NO FOOTER */}
+      <Route path="/building" element={<Building />} />
+    </Routes>
   );
 }
 
