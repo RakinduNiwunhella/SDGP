@@ -59,20 +59,15 @@ const Help = () => {
       data: { user },
     } = await supabase.auth.getUser();
 
-    if (!user) {
-      setLoading(false);
-      alert("You must be logged in to submit a complaint.");
-      return;
-    }
-
     const payload = {
-      user_id: user.id,
+      user_id: user?.id || null,
       full_name: form.full_name,
       position: form.position || null,
       province: form.province || null,
       district: form.district || null,
       complaint_type: form.complaint_type,
       message: form.message,
+      is_anonymous: !user,
     };
 
     const { error } = await supabase.from("complains").insert([payload]);
@@ -82,7 +77,11 @@ const Help = () => {
     if (error) {
       alert(error.message);
     } else {
-      alert("Complaint submitted successfully");
+      alert(
+        user
+          ? "Complaint submitted successfully"
+          : "Complaint submitted anonymously"
+      );
       setForm({
         full_name: "",
         position: "",
