@@ -1,16 +1,14 @@
 import json
 import pandas as pd
+import numpy as np
 
 # FILES
 GEOJSON_FILE = "Kurunagala.geojson"
-DUMMY_XLSX  = "Dummy dataset.xlsx"
-OUTPUT_CSV  = "kurunegala_supabase_final.csv.gz"
+REFERENCE_CSV = "Dummy dataset.csv"
+OUTPUT_CSV = "kurunegala_supabase_final.csv"
 
-# Load dummy dataset
-dummy_df = pd.read_excel(DUMMY_XLSX)
-
-# Remove duplicate dummy rows (IMPORTANT)
-dummy_df = dummy_df.drop_duplicates()
+# Load reference agricultural data
+ref_df = pd.read_csv(REFERENCE_CSV)
 
 # Load GeoJSON
 with open(GEOJSON_FILE, "r", encoding="utf-8") as f:
@@ -40,34 +38,32 @@ def extract_coords(geom):
 for feat in geo["features"]:
     extract_coords(feat["geometry"])
 
-# Convert coords to DataFrame
+# Coordinates dataframe
 coords_df = pd.DataFrame(coords, columns=["lng", "lat"])
 
-# Reduce precision to ~10m accuracy
+# ~10m accuracy
 coords_df["lng"] = coords_df["lng"].round(4)
 coords_df["lat"] = coords_df["lat"].round(4)
+coords_df = coords_df.drop_duplicates().reset_index(drop=True)
 
-# Drop duplicates created by rounding
-coords_df = coords_df.drop_duplicates()
+# 🔥 SAMPLE realistic agri data PER ROW
+sampled_ref = ref_df.sample(
+    n=len(coords_df),
+    replace=True,
+    random_state=42
+).reset_index(drop=True)
 
-# Cross join
-dummy_df["_key"] = 1
-coords_df["_key"] = 1
+# Combine coords + realistic values
+final_df = pd.concat([coords_df, sampled_ref], axis=1)
 
-final_df = dummy_df.merge(coords_df, on="_key").drop(columns="_key")
+# Remove rows with incomplete data
+final_df = final_df.dropna().reset_index(drop=True)
 
-# Column order
-final_columns = list(dummy_df.columns.drop("_key")) + ["lng", "lat"]
-final_df = final_df[final_columns]
-
-# Save as COMPRESSED CSV
+# Save compressed
 final_df.to_csv(
-    OUTPUT_CSV,
-    index=False,
-    compression="gzip"
+    OUTPUT_CSV.replace(".gz", ""),
+    index=False
 )
 
 print("✅ DONE")
-print("Coordinates after rounding:", len(coords_df))
-print("Dummy rows:", len(dummy_df))
-print("Final rows:", len(final_df))
+print("Rows:", len(final_df))
