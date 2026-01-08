@@ -5,15 +5,19 @@ import { Outlet } from 'react-router-dom'
 
 const App = () => {
   return (
-    <div className='min-h-screen bg-gray-200 dark:bg-slate-900 transition-all duration-500 overflow-hidden'>
+    <div className="h-screen bg-gray-200 dark:bg-slate-900 transition-all duration-500 overflow-hidden">
+      {/* Fixed Header */}
       <Header />
 
-      <div className="flex pt-8"> 
-        {/* Sidebar */}
-        <Sidebar />
+      {/* Layout below header */}
+      <div className="flex pt-14 h-full overflow-hidden">
+        {/* Sidebar (no scroll) */}
+        <aside className="h-[calc(100vh-3.5rem)] overflow-hidden flex-shrink-0">
+          <Sidebar />
+        </aside>
 
-        {/* Routed Page Content */}
-        <main className="flex-1 p-6">
+        {/* Main content (scrolls) */}
+        <main className="flex-1 p-6 overflow-y-auto h-[calc(100vh-3.5rem)]">
           <Outlet />
         </main>
       </div>
