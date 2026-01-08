@@ -18,7 +18,7 @@ const bottomItems = [
 
 const Sidebar = () => {
   return (
-    <aside className="h-screen w-60 bg-white px-6 py-10 flex flex-col justify-between">
+    <aside className="h-full w-60 bg-white dark:bg-slate-900 px-6 py-6 flex flex-col justify-between border-r border-slate-200 dark:border-slate-800">
       <div>
         {/* Navigation list */}
         <nav className="flex flex-col gap-1">
@@ -29,8 +29,8 @@ const Sidebar = () => {
               className={({ isActive }) =>
                 `flex items-center gap-3 py-3 px-3 rounded-md transition-all duration-150 ${
                      (isActive || (location.pathname === '/' && item.id === 'dashboard'))
-                    ? 'text-white bg-linear-to-r from-blue-400 to-teal-400 shadow-md dark:from-blue-800 dark:to-teal-800'
-                    : 'text-gray-700 hover:text-black dark:text-gray-300 dark:hover:text-white'
+                    ? 'text-white bg-linear-to-r from-blue-400 to-teal-400 shadow-md dark:from-blue-700 dark:to-teal-700'
+                    : 'text-gray-700 hover:text-black dark:text-slate-300 dark:hover:text-white'
                 }`
               }
             >
@@ -54,8 +54,8 @@ const Sidebar = () => {
               className={({ isActive }) =>
                 `flex items-center gap-3 py-1 px-3 rounded-md transition-all duration-150 ${
                   isActive
-                    ? 'text-white bg-linear-to-r from-blue-400 to-teal-400 shadow-md dark:from-blue-800 dark:to-teal-800'
-                    : 'text-gray-700 hover:text-black dark:text-gray-300 dark:hover:text-white'
+                    ? 'text-white bg-linear-to-r from-blue-400 to-teal-400 shadow-md dark:from-blue-700 dark:to-teal-700'
+                    : 'text-gray-700 hover:text-black dark:text-slate-300 dark:hover:text-white'
                 }`
               }
             >
