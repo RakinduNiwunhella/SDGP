@@ -57,6 +57,7 @@ const MyDashboard = () => {
   const [outbreaks, setOutbreaks] = useState([]);
   const [ndviTrend, setNdviTrend] = useState([]);
   const [showAllOutbreaks, setShowAllOutbreaks] = useState(false);
+  const [districtHealth, setDistrictHealth] = useState([]);
 
   const pieColors = ["#10b981", "#f59e0b", "#ef4444"];
 
@@ -131,6 +132,22 @@ const MyDashboard = () => {
     };
 
     fetchNdviTrend();
+  }, []);
+
+  /* ------------------ FETCH DISTRICT HEALTH OVERVIEW ------------------ */
+  useEffect(() => {
+    const fetchDistrictHealth = async () => {
+      const { data, error } = await supabase
+        .from("paddy_health_summary_view")
+        .select("district, normal_pct")
+        .order("normal_pct", { ascending: false });
+
+      if (!error && data) {
+        setDistrictHealth(data);
+      }
+    };
+
+    fetchDistrictHealth();
   }, []);
 
   const formatMT = (value) => {
@@ -286,18 +303,13 @@ const MyDashboard = () => {
             District Health Overview
           </h3>
 
-          {[
-            ["Galle", "75%", "580 MT"],
-            ["Anuradhapura", "79%", "793 MT"],
-            ["Hambantota", "63%", "352 MT"],
-            ["Ampara", "89%", "620 MT"],
-          ].map(([d, h, y], i) => (
+          {districtHealth.map((d, i) => (
             <div
               key={i}
               className="flex justify-between px-4 py-3 text-sm"
             >
-              <span className="font-medium">{d}</span>
-              <span>{h} Healthy · {y}</span>
+              <span className="font-medium capitalize">{d.district}</span>
+              <span>{Math.round(d.normal_pct)}% Healthy</span>
             </div>
           ))}
         </div>
