@@ -1,5 +1,6 @@
 // MyDashboard.jsx
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { supabase } from "../../supabaseClient";
 import {
   LineChart,
   Line,
@@ -7,11 +8,10 @@ import {
   YAxis,
   Tooltip,
   ResponsiveContainer,
+  PieChart,
+  Pie,
+  Cell,
 } from "recharts";
-
-/* =========================
-   REUSABLE WIDGETS
-========================= */
 
 const StatWidget = ({ title, value, subtitle }) => {
   return (
@@ -50,9 +50,6 @@ const ProgressWidget = ({ label, value, color }) => {
   );
 };
 
-/* =========================
-   MOCK DATA
-========================= */
 
 const ndviData = [
   { day: "14 Oct", value: 0.38 },
@@ -92,12 +89,87 @@ const outbreaks = [
   },
 ];
 
-/* =========================
-   MAIN COMPONENT
-========================= */
+
 
 const MyDashboard = () => {
   const [selectedOutbreak, setSelectedOutbreak] = useState(null);
+  const [yieldForecast, setYieldForecast] = useState(null);
+  const [healthStats, setHealthStats] = useState([]);
+  const [healthyPercent, setHealthyPercent] = useState(0);
+
+useEffect(() => {
+  const fetchYieldForecast = async () => {
+    const { data, error } = await supabase
+      .from("yield_forecast_view")
+      .select("*")
+      .eq("district", "kurunegala");
+
+    console.log("Yield data:", data);
+    console.log("Yield error:", error);
+
+    if (error) {
+      setYieldForecast(null);
+      return;
+    }
+
+    if (data && data.length > 0) {
+      setYieldForecast(data[0]);
+    } else {
+      setYieldForecast(null);
+    }
+  };
+
+  fetchYieldForecast();
+}, []);
+
+useEffect(() => {
+  const fetchHealthDistribution = async () => {
+    const { data, error } = await supabase
+      .from("final_ml_predictions")
+      .select("paddy_health");
+
+    if (error) {
+      console.error("Health distribution error:", error);
+      setHealthStats([]);
+      return;
+    }
+
+    const counts = {};
+    data.forEach((row) => {
+      const key = row.paddy_health;
+      if (!key || key.toLowerCase() === "not applicable") return;
+      counts[key] = (counts[key] || 0) + 1;
+    });
+
+    const total = Object.values(counts).reduce((a, b) => a + b, 0);
+
+    const healthyCount =
+      (counts["Normal"] || 0) +
+      (counts["Healthy"] || 0);
+
+    const healthyPercentValue = total
+      ? Math.round((healthyCount / total) * 100)
+      : 0;
+
+    const formatted = Object.entries(counts).map(([name, value]) => ({
+      name,
+      value,
+      percent: Math.round((value / total) * 100),
+    }));
+
+    setHealthyPercent(healthyPercentValue);
+    setHealthStats(formatted);
+  };
+
+  fetchHealthDistribution();
+}, []);
+
+  const formatMT = (value) => {
+    if (!value) return "-";
+    if (value >= 1_000_000) return (value / 1_000_000).toFixed(2) + "M MT";
+    if (value >= 1_000) return (value / 1_000).toFixed(1) + "K MT";
+    return value.toFixed(1) + " MT";
+  };
 
   return (
     <div className="space-y-12 max-w-7xl mx-auto">
@@ -118,24 +190,72 @@ const MyDashboard = () => {
             </h3>
 
             <div className="flex gap-6 items-center">
-              <div className="w-28 h-28 rounded-full ring-8 ring-emerald-300/40 flex items-center justify-center">
-                <span className="text-xl font-semibold text-gray-800 dark:text-white">
-                  81%
-                </span>
-              </div>
+              <ResponsiveContainer width={180} height={180}>
+                <PieChart>
+                  <Pie
+                    data={healthStats}
+                    dataKey="value"
+                    nameKey="name"
+                    cx="50%"
+                    cy="50%"
+                    innerRadius={55}
+                    outerRadius={80}
+                    paddingAngle={3}
+                  >
+                    {healthStats.map((_, index) => (
+                      <Cell
+                        key={index}
+                        fill={["#10b981", "#f59e0b", "#ef4444"][index % 3]}
+                      />
+                    ))}
+                  </Pie>
+
+                  <text
+                    x="50%"
+                    y="45%"
+                    textAnchor="middle"
+                    dominantBaseline="middle"
+                    className="fill-gray-800 dark:fill-white text-xl font-semibold"
+                  >
+                    {healthyPercent}%
+                  </text>
+
+                  <text
+                    x="50%"
+                    y="58%"
+                    textAnchor="middle"
+                    dominantBaseline="middle"
+                    className="fill-gray-500 dark:fill-gray-400 text-xs"
+                  >
+                    Healthy
+                  </text>
+
+                  <Tooltip />
+                </PieChart>
+              </ResponsiveContainer>
 
               <div className="text-sm space-y-2">
-                <p className="text-emerald-600">Healthy Fields — 81%</p>
-                <p className="text-amber-500">Stressed Fields — 12%</p>
-                <p className="text-red-500">Severely Stressed — 7%</p>
+                {healthStats.map((h) => (
+                  <p key={h.name} className="text-gray-700 dark:text-gray-300">
+                    {h.name} — {h.percent}%
+                  </p>
+                ))}
               </div>
             </div>
           </div>
 
           <StatWidget
             title="Yield Forecast (MT)"
-            value="2.78M MT"
-            subtitle="Confidence: 76%"
+            value={
+              yieldForecast
+                ? formatMT(yieldForecast.total_yield_tons)
+                : "Loading..."
+            }
+            subtitle={
+              yieldForecast
+                ? `Confidence: ${yieldForecast.confidence}%`
+                : null
+            }
           />
 
           <StatWidget
