@@ -49,25 +49,13 @@ const ProgressWidget = ({ label, value, color }) => {
   );
 };
 
-/* ------------------ Dummy NDVI ------------------ */
-
-const ndviData = [
-  { day: "14 Oct", value: 0.38 },
-  { day: "19 Oct", value: 0.29 },
-  { day: "24 Oct", value: 0.45 },
-  { day: "29 Oct", value: 0.45 },
-  { day: "4 Nov", value: 0.62 },
-  { day: "9 Nov", value: 0.78 },
-  { day: "14 Nov", value: 0.69 },
-  { day: "19 Nov", value: 0.82 },
-];
-
 /* ------------------ MAIN ------------------ */
 
 const MyDashboard = () => {
   const [healthSummary, setHealthSummary] = useState(null);
   const [yieldForecast, setYieldForecast] = useState(null);
   const [outbreaks, setOutbreaks] = useState([]);
+  const [ndviTrend, setNdviTrend] = useState([]);
   const [showAllOutbreaks, setShowAllOutbreaks] = useState(false);
 
   const pieColors = ["#10b981", "#f59e0b", "#ef4444"];
@@ -122,6 +110,27 @@ const MyDashboard = () => {
     };
 
     fetchOutbreaks();
+  }, []);
+
+  /* ------------------ FETCH NATIONAL NDVI TREND ------------------ */
+  useEffect(() => {
+    const fetchNdviTrend = async () => {
+      const { data, error } = await supabase
+        .from("national_ndvi_trend_view")
+        .select("date, mean_ndvi")
+        .order("date", { ascending: true });
+
+      if (!error && data) {
+        setNdviTrend(
+          data.map((row) => ({
+            day: row.date,
+            value: row.mean_ndvi,
+          }))
+        );
+      }
+    };
+
+    fetchNdviTrend();
   }, []);
 
   const formatMT = (value) => {
@@ -241,7 +250,7 @@ const MyDashboard = () => {
           </h3>
 
           <ResponsiveContainer width="100%" height={180}>
-            <LineChart data={ndviData}>
+            <LineChart data={ndviTrend}>
               <XAxis dataKey="day" />
               <YAxis domain={[0, 1]} />
               <Tooltip />
@@ -272,7 +281,6 @@ const MyDashboard = () => {
           </div>
         </div>
 
-        {/* ✅ RESTORED SECTION */}
         <div className="bg-white dark:bg-slate-800 rounded-xl p-6 shadow-sm">
           <h3 className="text-lg font-medium mb-4">
             District Health Overview
