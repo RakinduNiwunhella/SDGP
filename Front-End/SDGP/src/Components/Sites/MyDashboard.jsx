@@ -14,25 +14,23 @@ import {
 } from "recharts";
 import { supabase } from "../../supabaseClient";
 
-const StatWidget = ({ title, value, subtitle }) => {
-  return (
-    <div className="bg-white dark:bg-slate-800 rounded-xl p-5 shadow-sm">
-      <p className="text-sm text-gray-500 dark:text-gray-400">{title}</p>
-      <p className="text-3xl font-semibold text-gray-900 dark:text-white">
-        {value}
-      </p>
-      {subtitle && (
-        <p className="text-xs text-gray-400 mt-1">{subtitle}</p>
-      )}
-    </div>
-  );
-};
+/* ------------------ Components ------------------ */
+
+const StatWidget = ({ title, value, subtitle }) => (
+  <div className="bg-white dark:bg-slate-800 rounded-xl p-5 shadow-sm">
+    <p className="text-sm text-gray-500 dark:text-gray-400">{title}</p>
+    <p className="text-3xl font-semibold text-gray-900 dark:text-white">
+      {value}
+    </p>
+    {subtitle && <p className="text-xs text-gray-400 mt-1">{subtitle}</p>}
+  </div>
+);
 
 const ProgressWidget = ({ label, value, color }) => {
   const bar = {
     green: "bg-emerald-500",
-    blue: "bg-blue-500",
     yellow: "bg-amber-400",
+    blue: "bg-blue-500",
   };
 
   return (
@@ -51,6 +49,7 @@ const ProgressWidget = ({ label, value, color }) => {
   );
 };
 
+/* ------------------ Dummy NDVI ------------------ */
 
 const ndviData = [
   { day: "14 Oct", value: 0.38 },
@@ -63,38 +62,13 @@ const ndviData = [
   { day: "19 Nov", value: 0.82 },
 ];
 
-const outbreaks = [
-  {
-    title: "Blast Disease",
-    district: "Kurunegala",
-    date: "2025-08-12",
-    status: "Under Review",
-    severity: "Medium",
-    notes: "Leaf blast patterns detected via NDVI anomaly",
-  },
-  {
-    title: "Drought Stress",
-    district: "Polonnaruwa",
-    date: "2025-07-29",
-    status: "Pending",
-    severity: "Low",
-    notes: "Sustained moisture deficit for 10 days",
-  },
-  {
-    title: "Flood Damage",
-    district: "Ampara",
-    date: "2025-07-15",
-    status: "Confirmed",
-    severity: "High",
-    notes: "Backwater index spike after rainfall event",
-  },
-];
-
-
+/* ------------------ MAIN ------------------ */
 
 const MyDashboard = () => {
-  const [selectedOutbreak, setSelectedOutbreak] = useState(null);
   const [healthSummary, setHealthSummary] = useState(null);
+  const [yieldForecast, setYieldForecast] = useState(null);
+  const [outbreaks, setOutbreaks] = useState([]);
+  const [showAllOutbreaks, setShowAllOutbreaks] = useState(false);
 
   const pieColors = ["#10b981", "#f59e0b", "#ef4444"];
 
@@ -106,39 +80,69 @@ const MyDashboard = () => {
       ]
     : [];
 
+  /* ------------------ FETCH HEALTH ------------------ */
   useEffect(() => {
     const fetchHealthSummary = async () => {
-      const { data, error } = await supabase
+      const { data } = await supabase
         .from("paddy_health_summary_view")
         .select("normal_pct, mild_stress_pct, severe_stress_pct")
         .eq("district", "kurunegala")
         .single();
 
-      if (error) {
-        console.error("Health summary error:", error);
-      } else {
-        setHealthSummary(data);
-      }
+      setHealthSummary(data);
     };
 
     fetchHealthSummary();
   }, []);
 
+  /* ------------------ FETCH YIELD ------------------ */
+  useEffect(() => {
+    const fetchYieldForecast = async () => {
+      const { data } = await supabase
+        .from("yield_forecast_view")
+        .select("total_yield_tons, confidence")
+        .eq("district", "kurunegala")
+        .single();
+
+      setYieldForecast(data);
+    };
+
+    fetchYieldForecast();
+  }, []);
+
+  /* ------------------ FETCH OUTBREAKS ------------------ */
+  useEffect(() => {
+    const fetchOutbreaks = async () => {
+      const { data } = await supabase
+        .from("disaster_risk_overview_view")
+        .select("id, title, district, event_date")
+        .order("event_date", { ascending: false });
+
+      setOutbreaks(data || []);
+    };
+
+    fetchOutbreaks();
+  }, []);
+
+  const formatMT = (value) => {
+    if (!value) return "-";
+    if (value >= 1_000_000) return (value / 1_000_000).toFixed(2) + "M MT";
+    if (value >= 1_000) return (value / 1_000).toFixed(1) + "K MT";
+    return value.toFixed(1) + " MT";
+  };
+
+  /* ------------------ RENDER ------------------ */
+
   return (
     <div className="space-y-12 max-w-7xl mx-auto">
 
-      {/* NATIONAL OVERVIEW */}
+      {/* OVERVIEW */}
       <div>
-        <h1 className="text-xl font-semibold text-gray-900 dark:text-white">
-          National Overview
-        </h1>
-        <p className="text-sm text-gray-500 dark:text-gray-400">
-          Last updated: Sep 28, 2025 · 02:00 PM
-        </p>
+        <h1 className="text-xl font-semibold">National Overview</h1>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mt-6">
           <div className="bg-white dark:bg-slate-800 rounded-xl p-6 shadow-sm">
-            <h3 className="text-lg font-medium text-gray-700 dark:text-gray-200 mb-4">
+            <h3 className="text-lg font-medium mb-4">
               Field Health Distribution
             </h3>
 
@@ -152,13 +156,12 @@ const MyDashboard = () => {
                       nameKey="name"
                       cx="50%"
                       cy="50%"
-                      outerRadius={80}
                       innerRadius={45}
-                      labelLine={false}
+                      outerRadius={80}
                       label={({ value }) => `${value.toFixed(1)}%`}
                     >
-                      {healthPieData.map((_, index) => (
-                        <Cell key={index} fill={pieColors[index]} />
+                      {healthPieData.map((_, i) => (
+                        <Cell key={i} fill={pieColors[i]} />
                       ))}
                     </Pie>
                     <Tooltip formatter={(v) => `${v.toFixed(1)}%`} />
@@ -171,8 +174,16 @@ const MyDashboard = () => {
 
           <StatWidget
             title="Yield Forecast (MT)"
-            value="2.78M MT"
-            subtitle="Confidence: 76%"
+            value={
+              yieldForecast
+                ? formatMT(yieldForecast.total_yield_tons)
+                : "Loading..."
+            }
+            subtitle={
+              yieldForecast
+                ? `Confidence: ${yieldForecast.confidence}%`
+                : null
+            }
           />
 
           <StatWidget
@@ -185,41 +196,47 @@ const MyDashboard = () => {
 
       {/* OUTBREAKS */}
       <div>
-        <h2 className="text-lg font-medium text-gray-900 dark:text-white">
-          Outbreaks
-        </h2>
-        <p className="text-sm text-gray-500 dark:text-gray-400 mb-4">
-          Disease and pest outbreak monitoring
+        <h2 className="text-lg font-medium">Outbreaks</h2>
+        <p className="text-sm text-gray-500 mb-4">
+          Disease and disaster outbreak monitoring
         </p>
 
         <div className="bg-white dark:bg-slate-800 rounded-xl shadow-sm">
-          {outbreaks.map((o, i) => (
+          {(showAllOutbreaks ? outbreaks : outbreaks.slice(0, 5)).map((o) => (
             <div
-              key={i}
-              className="flex justify-between items-center px-6 py-4 hover:bg-gray-50 dark:hover:bg-slate-700 rounded-xl cursor-pointer"
+              key={o.id}
+              className="flex justify-between items-center px-6 py-4 hover:bg-gray-50 dark:hover:bg-slate-700"
             >
               <div>
-                <p className="font-medium text-gray-800 dark:text-gray-200">
+                <p className="font-medium">
                   {o.title} – {o.district}
                 </p>
-                <p className="text-sm text-gray-500">{o.date}</p>
+                <p className="text-sm text-gray-500">{o.event_date}</p>
               </div>
 
-              <button
-                onClick={() => setSelectedOutbreak(o)}
-                className="text-sm text-blue-600 hover:underline"
-              >
+              <button className="text-sm text-blue-600 hover:underline">
                 View
               </button>
             </div>
           ))}
+
+          {outbreaks.length > 5 && (
+            <div className="px-6 py-4 text-center border-t">
+              <button
+                onClick={() => setShowAllOutbreaks(!showAllOutbreaks)}
+                className="text-sm text-blue-600 hover:underline"
+              >
+                {showAllOutbreaks ? "View Less" : "View More"}
+              </button>
+            </div>
+          )}
         </div>
       </div>
 
       {/* LOWER ANALYTICS */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <div className="bg-white dark:bg-slate-800 rounded-xl p-6 shadow-sm">
-          <h3 className="text-lg font-medium text-gray-700 dark:text-gray-200 mb-4">
+          <h3 className="text-lg font-medium mb-4">
             National NDVI Trend (30 days)
           </h3>
 
@@ -228,12 +245,7 @@ const MyDashboard = () => {
               <XAxis dataKey="day" />
               <YAxis domain={[0, 1]} />
               <Tooltip />
-              <Line
-                type="monotone"
-                dataKey="value"
-                stroke="#10b981"
-                strokeWidth={2}
-              />
+              <Line dataKey="value" stroke="#10b981" />
             </LineChart>
           </ResponsiveContainer>
 
@@ -260,8 +272,9 @@ const MyDashboard = () => {
           </div>
         </div>
 
+        {/* ✅ RESTORED SECTION */}
         <div className="bg-white dark:bg-slate-800 rounded-xl p-6 shadow-sm">
-          <h3 className="text-lg font-medium text-gray-700 dark:text-gray-200 mb-4">
+          <h3 className="text-lg font-medium mb-4">
             District Health Overview
           </h3>
 
@@ -273,7 +286,7 @@ const MyDashboard = () => {
           ].map(([d, h, y], i) => (
             <div
               key={i}
-              className="flex justify-between px-4 py-3 text-sm text-gray-600 dark:text-gray-300"
+              className="flex justify-between px-4 py-3 text-sm"
             >
               <span className="font-medium">{d}</span>
               <span>{h} Healthy · {y}</span>
@@ -281,30 +294,6 @@ const MyDashboard = () => {
           ))}
         </div>
       </div>
-
-      {/* SIDE DRAWER */}
-      {selectedOutbreak && (
-        <div className="fixed inset-0 bg-black/40 flex justify-end z-50">
-          <div className="w-full sm:w-[420px] bg-white dark:bg-slate-900 p-6 shadow-2xl">
-            <h3 className="text-lg font-semibold mb-2">
-              {selectedOutbreak.title}
-            </h3>
-            <p className="text-sm text-gray-500 mb-4">
-              {selectedOutbreak.district} · {selectedOutbreak.date}
-            </p>
-            <p className="text-sm text-gray-700 dark:text-gray-300">
-              {selectedOutbreak.notes}
-            </p>
-
-            <button
-              onClick={() => setSelectedOutbreak(null)}
-              className="mt-6 w-full py-2 rounded-lg bg-gray-900 text-white"
-            >
-              Close
-            </button>
-          </div>
-        </div>
-      )}
     </div>
   );
 };
