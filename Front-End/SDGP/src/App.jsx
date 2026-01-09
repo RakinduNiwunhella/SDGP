@@ -2,6 +2,9 @@ import React from 'react'
 import Header from './Components/Navbar/Header'
 import Sidebar from './Components/Sidebar/Sidebar'
 import { Outlet } from 'react-router-dom'
+import Dashboard from './Components/Sites/MyDashboard';
+import Alerts from './Components/Sites/Alerts';
+import { Routes, Route } from 'react-router-dom';
 
 const App = () => {
   return (
@@ -18,7 +21,11 @@ const App = () => {
 
         {/* Main content (scrolls) */}
         <main className="flex-1 p-6 overflow-y-auto h-[calc(100vh-3.5rem)]">
-          <Outlet />
+          <Routes>
+            <Route path="/" element={<Dashboard />} />          {/* default */}
+            <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/alerts" element={<Alerts />} />      {/* this links the sidebar to Alerts */}
+          </Routes>
         </main>
       </div>
     </div>

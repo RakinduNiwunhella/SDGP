@@ -13,10 +13,11 @@ import AuthModal from "./Components/AuthModal";
 import SplashScreen from "./Components/SplashScreen";
 import Team from "./Components/Team";
 import Building from "./Components/Building";
+import Alert from "../../SDGP/src/Alert";
 
 function App() {
   const [loading, setLoading] = useState(true);
-  const [authOpen, setAuthOpen] = useState(false);
+
 
   // Splash screen
   if (loading) {
@@ -36,6 +37,7 @@ function App() {
             <main className="flex-1">
               <Hero />
               <Info />
+              <Alert />   {/* 🔥 ALERTS ARE NOW VISIBLE */}
               <Mission onOpenRegister={() => setAuthOpen(true)} />
               <Goals />
               <Features />
