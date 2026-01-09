@@ -21,19 +21,17 @@ function getHealthColor(health) {
 
 export default function RiceMap({ filters }) {
   const [points, setPoints] = useState([]);
-  const mapRef = useRef(null); // ✅ MUST be inside component
+  const mapRef = useRef(null);
 
   const selectedDistrict = filters.districts[0];
   const selectedHealth = filters.health;
 
-  /* ---------- EXPOSE MAP TO DEVTOOLS (TEMP) ---------- */
   useEffect(() => {
     if (mapRef.current) {
-      window.map = mapRef.current;
+      window.map = mapRef.current; // debug only
     }
   }, []);
 
-  /* ---------- FETCH ALL POINTS (PAGINATION) ---------- */
   useEffect(() => {
     if (!selectedDistrict) {
       setPoints([]);
@@ -50,6 +48,7 @@ export default function RiceMap({ filters }) {
           .from("final_ml_predictions")
           .select("lat, lng, paddy_health")
           .eq("District", selectedDistrict)
+          .neq("paddy_health", "Not Applicable") // ✅ critical fix
           .range(from, from + pageSize - 1);
 
         if (error) {
@@ -69,7 +68,6 @@ export default function RiceMap({ filters }) {
     fetchAllPoints();
   }, [selectedDistrict]);
 
-  /* ---------- HEALTH FILTER ---------- */
   let visiblePoints = points;
 
   if (selectedHealth.length > 0) {
@@ -82,7 +80,6 @@ export default function RiceMap({ filters }) {
     );
   }
 
-  /* ---------- AUTO ZOOM ---------- */
   const bounds =
     visiblePoints.length > 0
       ? latLngBounds(visiblePoints.map((p) => [p.lat, p.lng]))
