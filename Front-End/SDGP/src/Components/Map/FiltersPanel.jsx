@@ -1,74 +1,74 @@
-export default function FiltersPanel() {
+export default function FiltersPanel({ filters, setFilters }) {
+  const districts = [
+    "Naduwaththa",
+    "Anuradhapura",
+    "Polonnaruwa",
+    "Dambulla",
+  ];
+
+  const healthStatuses = ["Healthy", "Stressed", "Damaged"];
+
+  const toggleArrayValue = (key, value) => {
+    setFilters((prev) => {
+      const exists = prev[key].includes(value);
+      return {
+        ...prev,
+        [key]: exists
+          ? prev[key].filter((v) => v !== value)
+          : [...prev[key], value],
+      };
+    });
+  };
+
   return (
-    <div className="w-72 bg-white rounded-xl shadow-sm p-4 h-fit">
-      <div className="flex items-center justify-between mb-4">
-        <h2 className="font-semibold text-gray-800">Filters</h2>
-        <button className="text-gray-400 hover:text-gray-600">
-          ☰
-        </button>
-      </div>
+    <div className="w-72 bg-white rounded-xl shadow-sm p-4">
+      <h2 className="font-semibold text-gray-800 mb-4">Filters</h2>
 
       {/* Districts */}
       <div className="mb-5">
         <p className="text-sm font-medium text-gray-600 mb-2">Districts</p>
         <div className="space-y-2 text-sm">
-          {["Naduwaththa", "Anuradhapura", "Polonnaruwa", "Dambulla"].map(
-            (d) => (
-              <label key={d} className="flex items-center gap-2">
-                <input type="checkbox" className="rounded" />
-                {d}
-              </label>
-            )
-          )}
+          {districts.map((d) => (
+            <label key={d} className="flex items-center gap-2">
+              <input
+                type="checkbox"
+                checked={filters.districts.includes(d)}
+                onChange={() => toggleArrayValue("districts", d)}
+              />
+              {d}
+            </label>
+          ))}
         </div>
       </div>
 
       {/* Season */}
       <div className="mb-5">
         <p className="text-sm font-medium text-gray-600 mb-2">Season</p>
-        <select className="w-full border rounded-md px-2 py-1 text-sm">
-          <option>All seasons</option>
-          <option>Maha</option>
-          <option>Yala</option>
+        <select
+          className="w-full border rounded-md px-2 py-1 text-sm"
+          value={filters.season}
+          onChange={(e) =>
+            setFilters((prev) => ({ ...prev, season: e.target.value }))
+          }
+        >
+          <option value="all">All seasons</option>
+          <option value="maha">Maha</option>
+          <option value="yala">Yala</option>
         </select>
       </div>
 
-      {/* Date Range */}
-      <div className="mb-5">
-        <p className="text-sm font-medium text-gray-600 mb-2">Date Range</p>
-        <div className="flex gap-2">
-          <input
-            type="date"
-            className="border rounded-md px-2 py-1 text-sm w-full"
-          />
-          <input
-            type="date"
-            className="border rounded-md px-2 py-1 text-sm w-full"
-          />
-        </div>
-      </div>
-
       {/* Health Status */}
-      <div className="mb-5">
+      <div>
         <p className="text-sm font-medium text-gray-600 mb-2">Health Status</p>
         <div className="space-y-2 text-sm">
-          {["Healthy", "Stressed", "Damaged"].map((s) => (
+          {healthStatuses.map((s) => (
             <label key={s} className="flex items-center gap-2">
-              <input type="checkbox" />
+              <input
+                type="checkbox"
+                checked={filters.health.includes(s)}
+                onChange={() => toggleArrayValue("health", s)}
+              />
               {s}
-            </label>
-          ))}
-        </div>
-      </div>
-
-      {/* Alert Type */}
-      <div>
-        <p className="text-sm font-medium text-gray-600 mb-2">Alert Type</p>
-        <div className="space-y-2 text-sm">
-          {["Water Stress", "Flood Risk", "Disease Spread"].map((a) => (
-            <label key={a} className="flex items-center gap-2">
-              <input type="checkbox" />
-              {a}
             </label>
           ))}
         </div>
