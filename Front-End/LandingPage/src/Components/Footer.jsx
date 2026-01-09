@@ -71,8 +71,8 @@ export default function Footer() {
             Legal
           </h3>
           <ul className="space-y-2 text-sm text-gray-600 dark:text-gray-400">
-            <li><a href="/privacy-policy" className="hover:text-green-600 transition">Privacy Policy</a></li>
-            <li><a href="/terms" className="hover:text-green-600 transition">Terms of Service</a></li>
+            <li><a href="/#" className="hover:text-green-600 transition">Privacy Policy</a></li>
+            <li><a href="/#" className="hover:text-green-600 transition">Terms of Service</a></li>
           </ul>
 
           <button

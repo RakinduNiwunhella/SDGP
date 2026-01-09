@@ -10,8 +10,6 @@ const ProfileForm = () => {
     nic: "",
     district: "",
     address: "",
-    photo: null,
-    photoPreview: null,
   });
 
   const handleChange = (e) => {
@@ -21,54 +19,24 @@ const ProfileForm = () => {
     });
   };
 
-  const handleImageChange = (e) => {
-    const file = e.target.files[0];
-    if (!file) return;
-
-    setProfile({
-      ...profile,
-      photo: file,
-      photoPreview: URL.createObjectURL(file),
-    });
-  };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    //Ready for Supabase upload later
     console.log("Profile Data:", profile);
   };
 
   return (
     <form onSubmit={handleSubmit} className="space-y-8">
       
-      {/* Profile Image */}
+      {/* Avatar */}
       <div className="flex items-center gap-6">
-        <div className="w-28 h-28 rounded-full border-2 border-dashed border-gray-300 flex items-center justify-center overflow-hidden">
-          {profile.photoPreview ? (
-            <img
-              src={profile.photoPreview}
-              alt="Profile Preview"
-              className="w-full h-full object-cover"
-            />
-          ) : (
-            <span className="text-gray-400 text-sm text-center">
-              No Photo
-            </span>
-          )}
-        </div>
-
-        <label className="cursor-pointer">
-          <input
-            type="file"
-            accept="image/*"
-            onChange={handleImageChange}
-            className="hidden"
-          />
-          <span className="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition">
-            Upload Photo
+        <div className="w-28 h-28 rounded-full bg-green-100 flex items-center justify-center">
+          <span className="text-3xl font-semibold text-green-700">
+            {profile.firstName
+              ? profile.firstName.charAt(0).toUpperCase()
+              : "U"}
           </span>
-        </label>
+        </div>
+        
       </div>
 
       {/* Form Fields */}
@@ -80,6 +48,7 @@ const ProfileForm = () => {
           onChange={handleChange}
           placeholder="Enter your first name"
         />
+
         <InputField
           label="Last Name"
           name="lastName"
@@ -87,6 +56,7 @@ const ProfileForm = () => {
           onChange={handleChange}
           placeholder="Enter your last name"
         />
+
         <InputField
           label="Email"
           type="email"
@@ -95,6 +65,7 @@ const ProfileForm = () => {
           onChange={handleChange}
           placeholder="example@email.com"
         />
+
         <InputField
           label="Phone Number"
           name="phone"
@@ -102,6 +73,7 @@ const ProfileForm = () => {
           onChange={handleChange}
           placeholder="07XXXXXXXX"
         />
+
         <InputField
           label="NIC Number"
           name="nic"
@@ -109,6 +81,7 @@ const ProfileForm = () => {
           onChange={handleChange}
           placeholder="200012345678"
         />
+
         <InputField
           label="District"
           name="district"

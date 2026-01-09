@@ -8,7 +8,7 @@ const Profile = () => {
           User Profile
         </h1>
         <p className="text-gray-500 mb-8">
-          Update your profile details and photo
+          Update your profile details below.
         </p>
 
         <ProfileForm />

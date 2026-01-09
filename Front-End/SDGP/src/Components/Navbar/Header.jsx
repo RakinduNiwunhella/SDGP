@@ -2,10 +2,8 @@ import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 
 const Header = () => {
-  // ✅ Always start in LIGHT mode
   const [isDark, setIsDark] = useState(false)
 
-  // ✅ Apply dark mode class properly
   useEffect(() => {
     const html = document.documentElement
 
