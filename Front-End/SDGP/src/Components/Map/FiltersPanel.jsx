@@ -1,6 +1,6 @@
 export default function FiltersPanel({ filters, setFilters }) {
   const districts = [
-    "Naduwaththa",
+    "Kurunegala",
     "Anuradhapura",
     "Polonnaruwa",
     "Dambulla",
