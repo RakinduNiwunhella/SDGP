@@ -1,4 +1,4 @@
-import { MapContainer, TileLayer, CircleMarker } from "react-leaflet";
+import { MapContainer, TileLayer, CircleMarker, GeoJSON } from "react-leaflet";
 import { useEffect, useState, useRef } from "react";
 import { latLngBounds } from "leaflet";
 import { supabase } from "../../supabaseClient";
@@ -19,19 +19,31 @@ function getHealthColor(health) {
   return "#2563eb";
 }
 
-export default function RiceMap({ filters }) {
+/* ---------- POLYGON STYLE ---------- */
+const paddyStyle = {
+  fillColor: "#f59e0b",   // orange
+  fillOpacity: 0.7,
+  color: "#b45309",
+  weight: 1,
+};
+
+export default function RiceMap({ filters, layers }) {
   const [points, setPoints] = useState([]);
+  const [paddyGeo, setPaddyGeo] = useState(null);
   const mapRef = useRef(null);
 
   const selectedDistrict = filters.districts[0];
   const selectedHealth = filters.health;
 
+  /* ---------- LOAD GEOJSON ---------- */
   useEffect(() => {
-    if (mapRef.current) {
-      window.map = mapRef.current; // debug only
-    }
+    fetch("/Kurunagala.geojson")
+      .then((res) => res.json())
+      .then(setPaddyGeo)
+      .catch(console.error);
   }, []);
 
+  /* ---------- FETCH POINTS ---------- */
   useEffect(() => {
     if (!selectedDistrict) {
       setPoints([]);
@@ -48,14 +60,10 @@ export default function RiceMap({ filters }) {
           .from("final_ml_predictions")
           .select("lat, lng, paddy_health")
           .eq("District", selectedDistrict)
-          .neq("paddy_health", "Not Applicable") // ✅ critical fix
+          .neq("paddy_health", "Not Applicable")
           .range(from, from + pageSize - 1);
 
-        if (error) {
-          console.error(error);
-          break;
-        }
-
+        if (error) break;
         if (!data || data.length === 0) break;
 
         allData = allData.concat(data);
@@ -68,6 +76,7 @@ export default function RiceMap({ filters }) {
     fetchAllPoints();
   }, [selectedDistrict]);
 
+  /* ---------- HEALTH FILTER ---------- */
   let visiblePoints = points;
 
   if (selectedHealth.length > 0) {
@@ -80,6 +89,7 @@ export default function RiceMap({ filters }) {
     );
   }
 
+  /* ---------- AUTO ZOOM ---------- */
   const bounds =
     visiblePoints.length > 0
       ? latLngBounds(visiblePoints.map((p) => [p.lat, p.lng]))
@@ -93,11 +103,18 @@ export default function RiceMap({ filters }) {
       bounds={bounds}
       className="h-full w-full rounded-xl"
     >
+      {/* Base map */}
       <TileLayer
         attribution="© OpenStreetMap"
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
       />
 
+      {/* 🟧 PADDY EXTENT POLYGONS */}
+      {layers.paddyExtent && paddyGeo && (
+        <GeoJSON data={paddyGeo} style={paddyStyle} />
+      )}
+
+      {/* 🔵🟢🟡🔴 PADDY POINTS */}
       {visiblePoints.map((p, idx) => (
         <CircleMarker
           key={idx}
