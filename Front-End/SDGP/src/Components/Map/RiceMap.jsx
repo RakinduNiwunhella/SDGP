@@ -1,5 +1,5 @@
 import { MapContainer, TileLayer, CircleMarker } from "react-leaflet";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { latLngBounds } from "leaflet";
 import { supabase } from "../../supabaseClient";
 
@@ -21,29 +21,55 @@ function getHealthColor(health) {
 
 export default function RiceMap({ filters }) {
   const [points, setPoints] = useState([]);
+  const mapRef = useRef(null); // ✅ MUST be inside component
 
   const selectedDistrict = filters.districts[0];
   const selectedHealth = filters.health;
 
+  /* ---------- EXPOSE MAP TO DEVTOOLS (TEMP) ---------- */
+  useEffect(() => {
+    if (mapRef.current) {
+      window.map = mapRef.current;
+    }
+  }, []);
+
+  /* ---------- FETCH ALL POINTS (PAGINATION) ---------- */
   useEffect(() => {
     if (!selectedDistrict) {
       setPoints([]);
       return;
     }
 
-    const fetchPoints = async () => {
-      const { data, error } = await supabase
-        .from("final_ml_predictions")
-        .select("lat, lng, paddy_health") // 🔴 CHANGE HERE if name differs
-        .eq("District", selectedDistrict);
+    const fetchAllPoints = async () => {
+      const pageSize = 1000;
+      let from = 0;
+      let allData = [];
 
-      if (error) console.error(error);
-      else setPoints(data);
+      while (true) {
+        const { data, error } = await supabase
+          .from("final_ml_predictions")
+          .select("lat, lng, paddy_health")
+          .eq("District", selectedDistrict)
+          .range(from, from + pageSize - 1);
+
+        if (error) {
+          console.error(error);
+          break;
+        }
+
+        if (!data || data.length === 0) break;
+
+        allData = allData.concat(data);
+        from += pageSize;
+      }
+
+      setPoints(allData);
     };
 
-    fetchPoints();
+    fetchAllPoints();
   }, [selectedDistrict]);
 
+  /* ---------- HEALTH FILTER ---------- */
   let visiblePoints = points;
 
   if (selectedHealth.length > 0) {
@@ -56,6 +82,7 @@ export default function RiceMap({ filters }) {
     );
   }
 
+  /* ---------- AUTO ZOOM ---------- */
   const bounds =
     visiblePoints.length > 0
       ? latLngBounds(visiblePoints.map((p) => [p.lat, p.lng]))
@@ -63,6 +90,7 @@ export default function RiceMap({ filters }) {
 
   return (
     <MapContainer
+      ref={mapRef}
       center={SRI_LANKA_CENTER}
       zoom={SRI_LANKA_ZOOM}
       bounds={bounds}
