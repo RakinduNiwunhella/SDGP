@@ -22,4 +22,5 @@ yarn-error.log*
 .vite/
 
 # CSV / data files (keep if intentional)
+GeoData/kurunegala_supabase_final.csv
 *.csv
