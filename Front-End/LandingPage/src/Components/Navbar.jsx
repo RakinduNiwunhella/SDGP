@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import logo from '/images/Logo-RiceVision.webp'
 
-
 const Navbar = ({ onOpenRegister }) => {
   const [menuOpen, setMenuOpen] = useState(false)
   const [theme, setTheme] = useState('light')
